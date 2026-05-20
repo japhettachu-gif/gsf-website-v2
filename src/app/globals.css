@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* GSF Design System */
+    --background: 0 0% 100%;
+    --foreground: 160 10% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 160 10% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 160 10% 10%;
+    --primary: 152 65% 29%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 150 20% 96%;
+    --secondary-foreground: 152 65% 20%;
+    --muted: 150 15% 95%;
+    --muted-foreground: 155 8% 46%;
+    --accent: 150 30% 92%;
+    --accent-foreground: 152 65% 25%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 150 15% 90%;
+    --input: 150 15% 90%;
+    --ring: 152 65% 29%;
+    --radius: 0.5rem;
+
+    /* GSF Custom */
+    --gsf-green: #1A7C4F;
+    --gsf-green-dark: #0F4E31;
+    --gsf-gold: #C9A84C;
+    --gsf-black: #0D0D0D;
+    --gsf-surface: #F5F5F5;
+  }
+
+  .dark {
+    --background: 160 10% 8%;
+    --foreground: 0 0% 98%;
+    --card: 160 10% 12%;
+    --card-foreground: 0 0% 98%;
+    --popover: 160 10% 12%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 152 60% 45%;
+    --primary-foreground: 160 10% 6%;
+    --secondary: 160 10% 18%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 160 10% 18%;
+    --muted-foreground: 155 8% 65%;
+    --accent: 152 30% 22%;
+    --accent-foreground: 152 40% 80%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 100% / 0.1;
+    --input: 0 0% 100% / 0.12;
+    --ring: 152 60% 45%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight;
+  }
+}
+
+@layer utilities {
+  /* Container GSF */
+  .container-gsf {
+    @apply w-full mx-auto px-5 md:px-8;
+    max-width: 1200px;
+  }
+
+  /* Gradients hero */
+  .gsf-hero-overlay {
+    background: linear-gradient(
+      135deg,
+      rgba(13, 13, 13, 0.88) 0%,
+      rgba(15, 78, 49, 0.75) 50%,
+      rgba(26, 124, 79, 0.60) 100%
+    );
+  }
+
+  /* Text gradient GSF */
+  .gsf-text-gradient {
+    background: linear-gradient(135deg, var(--gsf-green), var(--gsf-gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Scrollbar custom */
+  .scrollbar-thin::-webkit-scrollbar { width: 4px; }
+  .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-primary/30 rounded-full;
+  }
+
+  /* Admin sidebar active */
+  .nav-active {
+    @apply bg-primary/20 text-primary border-l-2 border-primary;
+  }
+}
+
+/* Admin dashboard sidebar */
+.admin-sidebar {
+  background: linear-gradient(180deg, #0F4E31 0%, #0D1A10 100%);
+}
