@@ -44,7 +44,7 @@ export default async function DashboardPage({
     .eq("status", "planned")
     .gte("date", new Date().toISOString().split("T")[0])
     .order("date", { ascending: true })
-    .limit(5);
+    .limit(5) as unknown as { data: any[] | null };
 
   return (
     <div className="space-y-6">
