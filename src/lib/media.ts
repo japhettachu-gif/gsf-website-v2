@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
-import { createServerClient } from '@/lib/supabase/server'
+
 import type { GalleryImage, MediaVideo } from '@/types/media'
 
 // ─── GALLERY ─────────────────────────────────────────────────────────────────
@@ -32,7 +32,7 @@ export async function getGalleryAlbums(): Promise<string[]> {
 }
 
 export async function getAllImages(): Promise<GalleryImage[]> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data, error } = await supabase.from('gallery_images').select('*')
     .order('created_at', { ascending: false })
   if (error) throw error
@@ -87,7 +87,7 @@ export async function getPublicVideos(): Promise<MediaVideo[]> {
 }
 
 export async function getAllVideos(): Promise<MediaVideo[]> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data, error } = await supabase.from('media_videos').select('*').order('published_at', { ascending: false })
   if (error) throw error
   return data ?? []
