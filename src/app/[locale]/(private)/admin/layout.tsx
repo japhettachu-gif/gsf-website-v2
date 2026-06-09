@@ -38,7 +38,7 @@ export default async function AdminLayout({
         <AdminHeader
           locale={locale}
           userName={profile.display_name}
-          userRole={profile.role}
+          userRole={profile.role as UserRole}
           avatarUrl={profile.avatar_url}
         />
         <main className="flex-1 overflow-y-auto p-6">
