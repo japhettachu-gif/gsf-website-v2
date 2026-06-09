@@ -36,8 +36,7 @@ export default async function DashboardPage({
     .from("applications")
     .select("id, first_name, last_name, position, type, created_at, status")
     .order("created_at", { ascending: false })
-    .limit(5);
-
+    .limit(5) as unknown as { data: any[] | null };
   // Prochaines séances
   const { data: upcomingSessions } = await supabase
     .from("training_sessions")
