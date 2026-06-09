@@ -6,13 +6,30 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
-      { protocol: "https", hostname: "images.unsplash.com" },
-      { protocol: "https", hostname: "*.supabase.co" },
-      { protocol: "https", hostname: "*.supabase.in" },
+      // Unsplash (photos placeholder)
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
+      // Supabase Storage — ton projet spécifique (pas de wildcard)
+      {
+        protocol: "https",
+        hostname: "vwoazicozcusdplypbnc.supabase.co",
+        pathname: "/storage/v1/object/public/**",
+      },
     ],
   },
+
   experimental: {
-    serverActions: { allowedOrigins: ["localhost:3000", "geniussoccerfoundation.org"] },
+    serverActions: {
+      allowedOrigins: [
+        "localhost:3000",
+        "geniussoccerfoundation.org",
+        "www.geniussoccerfoundation.org",
+        // Ton sous-domaine CF Pages auto-généré (à adapter après le 1er déploiement)
+        "gsf-academy-platform.pages.dev",
+      ],
+    },
   },
 };
 
