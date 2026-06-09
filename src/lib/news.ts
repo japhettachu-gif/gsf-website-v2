@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
-import { createClient } from '@/lib/supabase/client'
+
 import type { NewsArticle, ArticleStatus } from '@/types/news'
 
 export async function getPublishedArticles(limit?: number): Promise<NewsArticle[]> {

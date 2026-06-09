@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
-import { createClient } from '@/lib/supabase/client'
+
 import type { EvaluationCriteria, PlayerEvaluation, EvaluationScore, EvaluationPosition } from '@/types/evaluations'
 
 // ─── CRITERIA ────────────────────────────────────────────────────────────────

@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
-import { createClient } from '@/lib/supabase/client'
+
 import type { Partner, Alumni } from '@/types/partners'
 
 // PARTNERS

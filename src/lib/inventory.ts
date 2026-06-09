@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
-import { createClient } from '@/lib/supabase/client'
+
 import type { InventoryItem, EquipmentRequest } from '@/types/inventory'
 
 // ─── INVENTORY ───────────────────────────────────────────────────────────────
