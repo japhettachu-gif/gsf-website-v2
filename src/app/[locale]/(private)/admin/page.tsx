@@ -9,7 +9,7 @@ export default async function DashboardPage({
 }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "admin" });
-  const supabase = await createClient();
+  const supabase = createClient();
 
   // Récupérer les stats en parallèle
   const [
