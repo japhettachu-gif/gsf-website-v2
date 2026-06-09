@@ -29,7 +29,7 @@ export default async function EvaluationDetailPage({
   params: Promise<{ locale: string; id: string }>;
 }) {
   const { locale, id } = await params;
-  const supabase = await createClient();
+  const supabase = createClient();
   const loc = locale as "fr" | "en";
 
   const { data: { user } } = await supabase.auth.getUser();

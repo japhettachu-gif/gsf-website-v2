@@ -14,7 +14,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string; id: string }>;
 }): Promise<Metadata> {
   const { locale, id } = await params;
-  const supabase = await createClient();
+  const supabase = createClient();
   const { data } = await supabase
     .from("players")
     .select("first_name, last_name, position, category")
@@ -35,7 +35,7 @@ export default async function PlayerPage({
 }) {
   const { locale, id } = await params;
   const t = await getTranslations({ locale, namespace: "players" });
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const { data: player } = await supabase
     .from("players")

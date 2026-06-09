@@ -15,7 +15,7 @@ export default async function AdminPlayersPage({
   const { locale } = await params;
   const { q, category, position, status } = await searchParams;
   const t = await getTranslations({ locale, namespace: "admin" });
-  const supabase = await createClient();
+  const supabase = createClient();
 
   let query = supabase
     .from("players")

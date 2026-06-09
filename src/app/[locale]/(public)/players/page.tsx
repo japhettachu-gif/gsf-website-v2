@@ -24,7 +24,7 @@ export default async function PlayersPage({
 }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "players" });
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const { data: players } = await supabase
     .from("players")

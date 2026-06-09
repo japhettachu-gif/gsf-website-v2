@@ -30,7 +30,7 @@ export default async function HomePage({
 }) {
   const { locale } = await params;
   const t = await getTranslations({ locale });
-  const supabase = await createClient();
+  const supabase = createClient();
 
   // Données depuis Supabase
   const [

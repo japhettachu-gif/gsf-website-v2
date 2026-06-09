@@ -9,7 +9,7 @@ export default async function PlayerSchedulePage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const supabase = await createClient();
+  const supabase = createClient();
   const loc = locale as "fr" | "en";
 
   const { data: { user } } = await supabase.auth.getUser();

@@ -10,7 +10,7 @@ export default async function EditPlayerPage({
   params: Promise<{ locale: string; id: string }>;
 }) {
   const { locale, id } = await params;
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const { data: player } = await supabase
     .from("players")
