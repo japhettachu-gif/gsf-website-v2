@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
-import { createServerClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/client'
 import type { StaffMember, StaffFormData } from '@/types/staff'
 
 // ─── PUBLIC (client-side) ───────────────────────────────────────────────────
@@ -21,7 +21,7 @@ export async function getPublicStaff(): Promise<StaffMember[]> {
 // ─── ADMIN (server-side) ────────────────────────────────────────────────────
 
 export async function getAllStaff(): Promise<StaffMember[]> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data, error } = await supabase
     .from('staff')
     .select('*')
@@ -33,7 +33,7 @@ export async function getAllStaff(): Promise<StaffMember[]> {
 }
 
 export async function getStaffById(id: string): Promise<StaffMember | null> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data, error } = await supabase
     .from('staff')
     .select('*')

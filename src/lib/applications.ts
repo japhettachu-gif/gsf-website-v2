@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
-import { createServerClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/client'
 import type { Application, ApplicationStatus } from '@/types/applications'
 
 // ─── PUBLIC ──────────────────────────────────────────────────────────────────
@@ -18,7 +18,7 @@ export async function submitApplication(payload: Partial<Application>): Promise<
 // ─── ADMIN ───────────────────────────────────────────────────────────────────
 
 export async function getAllApplications(type?: Application['type']): Promise<Application[]> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   let query = supabase
     .from('applications')
     .select('*')
@@ -30,7 +30,7 @@ export async function getAllApplications(type?: Application['type']): Promise<Ap
 }
 
 export async function getApplicationById(id: string): Promise<Application | null> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data } = await supabase.from('applications').select('*').eq('id', id).single()
   return data
 }
@@ -59,7 +59,7 @@ export async function updateApplicationStatus(
 }
 
 export async function getApplicationStats() {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data } = await supabase.from('applications').select('type, status')
   const apps = data ?? []
   return {

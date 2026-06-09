@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
-import { createServerClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/client'
 import type { Competition, Match } from '@/types/competitions'
 
 // ─── COMPETITIONS PUBLIC ─────────────────────────────────────────────────────
@@ -64,7 +64,7 @@ export async function getUpcomingMatches(limit = 5): Promise<Match[]> {
 // ─── COMPETITIONS ADMIN ──────────────────────────────────────────────────────
 
 export async function getAllCompetitions(): Promise<Competition[]> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data, error } = await supabase
     .from('competitions').select('*')
     .order('start_date', { ascending: false })
@@ -73,7 +73,7 @@ export async function getAllCompetitions(): Promise<Competition[]> {
 }
 
 export async function getCompetitionById(id: string): Promise<Competition | null> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data } = await supabase.from('competitions').select('*').eq('id', id).single()
   return data
 }
@@ -103,7 +103,7 @@ export async function deleteCompetition(id: string): Promise<void> {
 // ─── MATCHES ADMIN ───────────────────────────────────────────────────────────
 
 export async function getAllMatches(): Promise<Match[]> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data, error } = await supabase
     .from('matches')
     .select('*, competition:competitions(id, name_fr, name, color)')
@@ -113,7 +113,7 @@ export async function getAllMatches(): Promise<Match[]> {
 }
 
 export async function getMatchById(id: string): Promise<Match | null> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data } = await supabase
     .from('matches').select('*, competition:competitions(*)').eq('id', id).single()
   return data

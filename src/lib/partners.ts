@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
-import { createServerClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/client'
 import type { Partner, Alumni } from '@/types/partners'
 
 // PARTNERS
@@ -13,14 +13,14 @@ export async function getPublicPartners(): Promise<Partner[]> {
 }
 
 export async function getAllPartners(): Promise<Partner[]> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data, error } = await supabase.from('partners').select('*').order('sort_order', { nullsFirst: false }).order('name')
   if (error) throw error
   return data ?? []
 }
 
 export async function getPartnerById(id: string): Promise<Partner | null> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data } = await supabase.from('partners').select('*').eq('id', id).single()
   return data
 }
@@ -57,14 +57,14 @@ export async function getPublicAlumni(): Promise<Alumni[]> {
 }
 
 export async function getAllAlumni(): Promise<Alumni[]> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data, error } = await supabase.from('alumni').select('*').order('name')
   if (error) throw error
   return data ?? []
 }
 
 export async function getAlumniById(id: string): Promise<Alumni | null> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data } = await supabase.from('alumni').select('*').eq('id', id).single()
   return data
 }

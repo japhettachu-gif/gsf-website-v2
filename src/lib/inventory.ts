@@ -1,11 +1,11 @@
 import { createClient } from '@/lib/supabase/client'
-import { createServerClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/client'
 import type { InventoryItem, EquipmentRequest } from '@/types/inventory'
 
 // ─── INVENTORY ───────────────────────────────────────────────────────────────
 
 export async function getAllItems(): Promise<InventoryItem[]> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data, error } = await supabase
     .from('inventory_items')
     .select('*')
@@ -16,13 +16,13 @@ export async function getAllItems(): Promise<InventoryItem[]> {
 }
 
 export async function getItemById(id: string): Promise<InventoryItem | null> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data } = await supabase.from('inventory_items').select('*').eq('id', id).single()
   return data
 }
 
 export async function getLowStockItems(): Promise<InventoryItem[]> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data, error } = await supabase
     .from('inventory_items')
     .select('*')
@@ -58,7 +58,7 @@ export async function deleteItem(id: string): Promise<void> {
 // ─── EQUIPMENT REQUESTS ──────────────────────────────────────────────────────
 
 export async function getAllRequests(): Promise<EquipmentRequest[]> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data, error } = await supabase
     .from('equipment_requests')
     .select('*, item:inventory_items(id, name_fr, quantity_available)')
@@ -98,7 +98,7 @@ export async function updateRequestStatus(
 // ─── STATS ───────────────────────────────────────────────────────────────────
 
 export async function getInventoryStats() {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data } = await supabase.from('inventory_items').select('category, quantity_total, quantity_available, unit_price_xaf, status')
   const items = data ?? []
   return {

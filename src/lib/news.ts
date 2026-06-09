@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
-import { createServerClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/client'
 import type { NewsArticle, ArticleStatus } from '@/types/news'
 
 export async function getPublishedArticles(limit?: number): Promise<NewsArticle[]> {
@@ -21,7 +21,7 @@ export async function getArticleBySlug(slug: string): Promise<NewsArticle | null
 }
 
 export async function getAllArticles(): Promise<NewsArticle[]> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data, error } = await supabase.from('news_articles').select('*')
     .order('created_at', { ascending: false })
   if (error) throw error
@@ -29,7 +29,7 @@ export async function getAllArticles(): Promise<NewsArticle[]> {
 }
 
 export async function getArticleById(id: string): Promise<NewsArticle | null> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data } = await supabase.from('news_articles').select('*').eq('id', id).single()
   return data
 }

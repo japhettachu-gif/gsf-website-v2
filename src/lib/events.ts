@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
-import { createServerClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/client'
 import type { Event } from '@/types/events'
 
 // ─── PUBLIC ──────────────────────────────────────────────────────────────────
@@ -56,7 +56,7 @@ export async function getEventBySlug(slug: string): Promise<Event | null> {
 // ─── ADMIN ───────────────────────────────────────────────────────────────────
 
 export async function getAllEvents(): Promise<Event[]> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data, error } = await supabase
     .from('events').select('*').order('start_date', { ascending: false })
   if (error) throw error
@@ -64,7 +64,7 @@ export async function getAllEvents(): Promise<Event[]> {
 }
 
 export async function getEventById(id: string): Promise<Event | null> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data } = await supabase.from('events').select('*').eq('id', id).single()
   return data
 }

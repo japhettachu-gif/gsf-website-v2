@@ -1,11 +1,11 @@
 import { createClient } from '@/lib/supabase/client'
-import { createServerClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/client'
 import type { EvaluationCriteria, PlayerEvaluation, EvaluationScore, EvaluationPosition } from '@/types/evaluations'
 
 // ─── CRITERIA ────────────────────────────────────────────────────────────────
 
 export async function getAllCriteria(): Promise<EvaluationCriteria[]> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data, error } = await supabase
     .from('evaluation_criteria').select('*').eq('active', true)
     .order('pillar').order('sort_order')
@@ -43,7 +43,7 @@ export async function toggleCriteria(id: string, active: boolean): Promise<void>
 // ─── EVALUATIONS ADMIN ───────────────────────────────────────────────────────
 
 export async function getAllEvaluations(): Promise<PlayerEvaluation[]> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data, error } = await supabase
     .from('player_evaluations')
     .select(`*, player:players(first_name, last_name, photo_url, position), coach:staff(first_name, last_name, display_name)`)
@@ -53,7 +53,7 @@ export async function getAllEvaluations(): Promise<PlayerEvaluation[]> {
 }
 
 export async function getEvaluationById(id: string): Promise<PlayerEvaluation | null> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data } = await supabase
     .from('player_evaluations')
     .select(`*, player:players(id, first_name, last_name, photo_url, position), coach:staff(first_name, last_name, display_name)`)
@@ -62,7 +62,7 @@ export async function getEvaluationById(id: string): Promise<PlayerEvaluation | 
 }
 
 export async function getEvaluationScores(evaluationId: string): Promise<EvaluationScore[]> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data, error } = await supabase
     .from('evaluation_scores')
     .select(`*, criteria:evaluation_criteria(*)`)
@@ -113,7 +113,7 @@ export async function publishEvaluation(id: string): Promise<void> {
 // ─── PARENT PORTAL ───────────────────────────────────────────────────────────
 
 export async function getChildrenForParent(userId: string) {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data, error } = await supabase
     .from('parent_profiles')
     .select(`*, player:players(id, first_name, last_name, photo_url, position, status)`)
@@ -123,7 +123,7 @@ export async function getChildrenForParent(userId: string) {
 }
 
 export async function getPublishedEvaluationsForPlayer(playerId: string): Promise<PlayerEvaluation[]> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data, error } = await supabase
     .from('player_evaluations')
     .select(`*, coach:staff(first_name, last_name, display_name)`)
@@ -137,7 +137,7 @@ export async function getPublishedEvaluationsForPlayer(playerId: string): Promis
 export async function getPlayerProgressionData(playerId: string) {
   const evals = await getPublishedEvaluationsForPlayer(playerId)
   const progressData: { period: string; scores: Record<string, number> }[] = []
-  const supabase = createServerClient()
+  const supabase = createClient()
 
   for (const ev of evals.slice(0, 12)) {
     const { data: scores } = await supabase

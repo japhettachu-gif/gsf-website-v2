@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
-import { createServerClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/client'
 import type { Program, TrainingSession } from '@/types/programs'
 
 // ─── PROGRAMS — PUBLIC ───────────────────────────────────────────────────────
@@ -31,7 +31,7 @@ export async function getProgramBySlug(slug: string): Promise<Program | null> {
 // ─── PROGRAMS — ADMIN ────────────────────────────────────────────────────────
 
 export async function getAllPrograms(): Promise<Program[]> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data, error } = await supabase
     .from('programs')
     .select('*')
@@ -42,7 +42,7 @@ export async function getAllPrograms(): Promise<Program[]> {
 }
 
 export async function getProgramById(id: string): Promise<Program | null> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data } = await supabase.from('programs').select('*').eq('id', id).single()
   return data
 }
@@ -90,7 +90,7 @@ export async function getPublicSchedule(): Promise<TrainingSession[]> {
 // ─── SESSIONS — ADMIN ────────────────────────────────────────────────────────
 
 export async function getAllSessions(): Promise<TrainingSession[]> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data, error } = await supabase
     .from('training_sessions')
     .select(`*, program:programs(id, name, name_fr, age_group, color, icon), coach:staff(first_name, last_name, display_name)`)
@@ -101,7 +101,7 @@ export async function getAllSessions(): Promise<TrainingSession[]> {
 }
 
 export async function getSessionById(id: string): Promise<TrainingSession | null> {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data } = await supabase
     .from('training_sessions')
     .select(`*, program:programs(*), coach:staff(first_name, last_name, display_name)`)
