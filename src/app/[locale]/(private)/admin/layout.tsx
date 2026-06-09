@@ -2,6 +2,7 @@ import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { AdminHeader } from "@/components/admin/AdminHeader";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import type { UserRole } from "@/types";
 
 export default async function AdminLayout({
   children,
@@ -32,7 +33,7 @@ export default async function AdminLayout({
 
   return (
     <div className="flex h-screen overflow-hidden bg-muted/30">
-      <AdminSidebar locale={locale} role={profile.role} />
+      <AdminSidebar locale={locale} role={profile.role as UserRole} />
       <div className="flex flex-1 flex-col overflow-hidden">
         <AdminHeader
           locale={locale}
