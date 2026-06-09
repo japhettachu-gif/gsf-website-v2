@@ -353,6 +353,312 @@ export type Database = {
           sort_order?: number;
         };
       };
+    training_sessions: {
+        Row: {
+          id: string;
+          date: string;
+          time_start: string | null;
+          time_end: string | null;
+          category: "U10_U12" | "U13_U15" | "U16_U18";
+          coach_id: string | null;
+          location: string | null;
+          theme_fr: string | null;
+          theme_en: string | null;
+          objectives: string[] | null;
+          notes: string | null;
+          status: "planned" | "completed" | "cancelled";
+        };
+        Insert: {
+          id?: string;
+          date: string;
+          time_start?: string | null;
+          time_end?: string | null;
+          category: "U10_U12" | "U13_U15" | "U16_U18";
+          coach_id?: string | null;
+          location?: string | null;
+          theme_fr?: string | null;
+          theme_en?: string | null;
+          objectives?: string[] | null;
+          notes?: string | null;
+          status?: "planned" | "completed" | "cancelled";
+        };
+        Update: {
+          date?: string;
+          time_start?: string | null;
+          time_end?: string | null;
+          category?: "U10_U12" | "U13_U15" | "U16_U18";
+          coach_id?: string | null;
+          location?: string | null;
+          theme_fr?: string | null;
+          theme_en?: string | null;
+          objectives?: string[] | null;
+          notes?: string | null;
+          status?: "planned" | "completed" | "cancelled";
+        };
+      };
+      attendances: {
+        Row: {
+          id: string;
+          session_id: string;
+          player_id: string;
+          status: "present" | "absent" | "excused" | "injured";
+          notes: string | null;
+        };
+        Insert: {
+          id?: string;
+          session_id: string;
+          player_id: string;
+          status: "present" | "absent" | "excused" | "injured";
+          notes?: string | null;
+        };
+        Update: {
+          session_id?: string;
+          player_id?: string;
+          status?: "present" | "absent" | "excused" | "injured";
+          notes?: string | null;
+        };
+      };
+      matches: {
+        Row: {
+          id: string;
+          date: string;
+          competition: string | null;
+          home_team: string;
+          away_team: string;
+          home_score: number | null;
+          away_score: number | null;
+          category: "U10_U12" | "U13_U15" | "U16_U18";
+          status: "upcoming" | "played" | "postponed" | "cancelled";
+          location: string | null;
+          notes: string | null;
+        };
+        Insert: {
+          id?: string;
+          date: string;
+          competition?: string | null;
+          home_team: string;
+          away_team: string;
+          home_score?: number | null;
+          away_score?: number | null;
+          category: "U10_U12" | "U13_U15" | "U16_U18";
+          status?: "upcoming" | "played" | "postponed" | "cancelled";
+          location?: string | null;
+          notes?: string | null;
+        };
+        Update: {
+          date?: string;
+          competition?: string | null;
+          home_team?: string;
+          away_team?: string;
+          home_score?: number | null;
+          away_score?: number | null;
+          category?: "U10_U12" | "U13_U15" | "U16_U18";
+          status?: "upcoming" | "played" | "postponed" | "cancelled";
+          location?: string | null;
+          notes?: string | null;
+        };
+      };
+      applications: {
+        Row: {
+          id: string;
+          type: "academy" | "boot_camp";
+          edition_id: string | null;
+          first_name: string;
+          last_name: string;
+          birth_date: string | null;
+          position: "GK" | "DEF" | "MID" | "FWD" | null;
+          city: string | null;
+          country: string | null;
+          parent_name: string | null;
+          parent_email: string | null;
+          parent_phone: string | null;
+          experience: string | null;
+          message: string | null;
+          status: "received" | "under_review" | "accepted" | "rejected" | "waitlisted";
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          type: "academy" | "boot_camp";
+          edition_id?: string | null;
+          first_name: string;
+          last_name: string;
+          birth_date?: string | null;
+          position?: "GK" | "DEF" | "MID" | "FWD" | null;
+          city?: string | null;
+          country?: string | null;
+          parent_name?: string | null;
+          parent_email?: string | null;
+          parent_phone?: string | null;
+          experience?: string | null;
+          message?: string | null;
+          status?: "received" | "under_review" | "accepted" | "rejected" | "waitlisted";
+          created_at?: string;
+        };
+        Update: {
+          type?: "academy" | "boot_camp";
+          edition_id?: string | null;
+          first_name?: string;
+          last_name?: string;
+          birth_date?: string | null;
+          position?: "GK" | "DEF" | "MID" | "FWD" | null;
+          city?: string | null;
+          country?: string | null;
+          parent_name?: string | null;
+          parent_email?: string | null;
+          parent_phone?: string | null;
+          experience?: string | null;
+          message?: string | null;
+          status?: "received" | "under_review" | "accepted" | "rejected" | "waitlisted";
+        };
+      };
+      boot_camp_editions: {
+        Row: {
+          id: string;
+          year: number;
+          theme_fr: string | null;
+          theme_en: string | null;
+          date_start: string | null;
+          date_end: string | null;
+          participants_count: number | null;
+          description_fr: string | null;
+          description_en: string | null;
+          cover_url: string | null;
+          status: "planned" | "ongoing" | "completed";
+        };
+        Insert: {
+          id?: string;
+          year: number;
+          theme_fr?: string | null;
+          theme_en?: string | null;
+          date_start?: string | null;
+          date_end?: string | null;
+          participants_count?: number | null;
+          description_fr?: string | null;
+          description_en?: string | null;
+          cover_url?: string | null;
+          status?: "planned" | "ongoing" | "completed";
+        };
+        Update: {
+          year?: number;
+          theme_fr?: string | null;
+          theme_en?: string | null;
+          date_start?: string | null;
+          date_end?: string | null;
+          participants_count?: number | null;
+          description_fr?: string | null;
+          description_en?: string | null;
+          cover_url?: string | null;
+          status?: "planned" | "ongoing" | "completed";
+        };
+      };
+      equipment_loans: {
+        Row: {
+          id: string;
+          equipment_id: string;
+          borrower_id: string;
+          quantity: number;
+          date_out: string;
+          date_expected_back: string | null;
+          date_returned: string | null;
+          status: "ongoing" | "returned" | "overdue";
+          notes: string | null;
+        };
+        Insert: {
+          id?: string;
+          equipment_id: string;
+          borrower_id: string;
+          quantity: number;
+          date_out: string;
+          date_expected_back?: string | null;
+          date_returned?: string | null;
+          status?: "ongoing" | "returned" | "overdue";
+          notes?: string | null;
+        };
+        Update: {
+          equipment_id?: string;
+          borrower_id?: string;
+          quantity?: number;
+          date_out?: string;
+          date_expected_back?: string | null;
+          date_returned?: string | null;
+          status?: "ongoing" | "returned" | "overdue";
+          notes?: string | null;
+        };
+      };
+      gallery_images: {
+        Row: {
+          id: string;
+          url: string;
+          caption_fr: string | null;
+          caption_en: string | null;
+          album: string | null;
+          boot_camp_edition_id: string | null;
+          uploaded_by: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          url: string;
+          caption_fr?: string | null;
+          caption_en?: string | null;
+          album?: string | null;
+          boot_camp_edition_id?: string | null;
+          uploaded_by?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          url?: string;
+          caption_fr?: string | null;
+          caption_en?: string | null;
+          album?: string | null;
+          boot_camp_edition_id?: string | null;
+          uploaded_by?: string | null;
+        };
+      };
+      alumni: {
+        Row: {
+          id: string;
+          player_id: string | null;
+          name: string;
+          current_club: string | null;
+          country: string | null;
+          years_at_gsf: string | null;
+          story_fr: string | null;
+          story_en: string | null;
+          photo_url: string | null;
+          active: boolean;
+        };
+        Insert: {
+          id?: string;
+          player_id?: string | null;
+          name: string;
+          current_club?: string | null;
+          country?: string | null;
+          years_at_gsf?: string | null;
+          story_fr?: string | null;
+          story_en?: string | null;
+          photo_url?: string | null;
+          active?: boolean;
+        };
+        Update: {
+          player_id?: string | null;
+          name?: string;
+          current_club?: string | null;
+          country?: string | null;
+          years_at_gsf?: string | null;
+          story_fr?: string | null;
+          story_en?: string | null;
+          photo_url?: string | null;
+          active?: boolean;
+        };
+      };
+    };
+    Views: Record<string, never>;
+    Functions: Record<string, never>;
+    Enums: Record<string, never>;
+  };
+};
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
