@@ -11,7 +11,7 @@ export default async function AdminLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const { data: { user } } = await supabase.auth.getUser();
 
@@ -19,12 +19,11 @@ export default async function AdminLayout({
     redirect(`/${locale}/login`);
   }
 
-  // Vérifier le rôle
   const { data: profile } = await supabase
     .from("profiles")
     .select("role, display_name, avatar_url")
     .eq("id", user.id)
-    .single();
+    .single() as { data: { role: string; display_name: string; avatar_url: string } | null };
 
   const allowedRoles = ["super_admin", "technical_director", "coach", "logistics"];
   if (!profile || !allowedRoles.includes(profile.role)) {

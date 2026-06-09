@@ -1,14 +1,14 @@
 import Link from 'next/link'
 import { ChevronLeft } from 'lucide-react'
 import { getAllPrograms } from '@/lib/programs'
-import { createServerClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/server'
 import { SessionForm } from '@/components/sessions/SessionForm'
 
 export const metadata = { title: 'Nouvelle Séance | GSF Admin' }
 
 export default async function NewSessionPage() {
   const programs = await getAllPrograms().catch(() => [])
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data: coaches } = await supabase
     .from('staff')
     .select('id, first_name, last_name, display_name')

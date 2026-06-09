@@ -1,13 +1,13 @@
 import Link from 'next/link'
 import { ChevronLeft } from 'lucide-react'
-import { createServerClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/server'
 import { getAllCriteria } from '@/lib/evaluations'
 import { EvaluationForm } from '@/components/evaluations/EvaluationForm'
 
 export const metadata = { title: 'Nouveau Rapport | GSF Admin' }
 
 export default async function NewEvaluationPage({ searchParams }: { searchParams: { player_id?: string } }) {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data: players } = await supabase
     .from('players').select('id, first_name, last_name, position').eq('status', 'active').order('last_name')
   const { data: coaches } = await supabase

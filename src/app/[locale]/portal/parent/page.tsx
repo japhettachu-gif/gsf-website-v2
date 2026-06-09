@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
-import { createServerClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/server'
 import { getChildrenForParent } from '@/lib/evaluations'
 import Link from 'next/link'
 import { User, FileText } from 'lucide-react'
@@ -7,7 +7,7 @@ import { User, FileText } from 'lucide-react'
 export const metadata = { title: 'Portail Parent | GSF Academy' }
 
 export default async function ParentPortalPage() {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 

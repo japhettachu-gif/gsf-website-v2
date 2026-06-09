@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ChevronLeft } from 'lucide-react'
 import { getSessionById, getAllPrograms } from '@/lib/programs'
-import { createServerClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/server'
 import { SessionForm } from '@/components/sessions/SessionForm'
 import { DeleteSessionButton } from '@/components/sessions/DeleteSessionButton'
 import { SESSION_TYPE_LABELS } from '@/types/programs'
@@ -14,7 +14,7 @@ export default async function EditSessionPage({ params }: { params: { id: string
   if (!session) notFound()
 
   const programs = await getAllPrograms().catch(() => [])
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data: coaches } = await supabase
     .from('staff')
     .select('id, first_name, last_name, display_name')

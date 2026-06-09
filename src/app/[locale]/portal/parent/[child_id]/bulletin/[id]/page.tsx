@@ -1,6 +1,6 @@
 import { redirect, notFound } from 'next/navigation'
 import Link from 'next/link'
-import { createServerClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/server'
 import { getEvaluationById, getEvaluationScores } from '@/lib/evaluations'
 import { RATING_CONFIG, PILLAR_LABELS, EVALUATION_TYPE_LABELS } from '@/types/evaluations'
 import type { EvaluationPillar } from '@/types/evaluations'
@@ -11,7 +11,7 @@ export const metadata = { title: 'Bulletin | Portail Parent GSF' }
 export default async function BulletinDetailPage({
   params
 }: { params: { child_id: string; id: string } }) {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 

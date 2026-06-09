@@ -9,3 +9,4 @@ export async function POST(request: NextRequest) {
   const locale = request.nextUrl.pathname.split("/")[1] || "fr";
   return NextResponse.redirect(new URL(`/${locale}/login`, request.url));
 }
+

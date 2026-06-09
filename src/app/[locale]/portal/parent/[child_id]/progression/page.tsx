@@ -1,6 +1,6 @@
 import { redirect, notFound } from 'next/navigation'
 import Link from 'next/link'
-import { createServerClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/server'
 import { getPlayerProgressionData } from '@/lib/evaluations'
 import { PILLAR_LABELS } from '@/types/evaluations'
 import { ChevronLeft } from 'lucide-react'
@@ -8,7 +8,7 @@ import { ChevronLeft } from 'lucide-react'
 export const metadata = { title: 'Progression | Portail Parent GSF' }
 
 export default async function ProgressionPage({ params }: { params: { child_id: string } }) {
-  const supabase = createServerClient()
+  const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
