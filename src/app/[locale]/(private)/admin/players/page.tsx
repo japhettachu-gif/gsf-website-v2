@@ -24,9 +24,9 @@ export default async function AdminPlayersPage({
 
   if (q) query = query.or(`first_name.ilike.%${q}%,last_name.ilike.%${q}%`);
   if (category) query = query.eq("category", category);
-  if (position) query = query.eq("position", position);
-  const { data: players, count } = await query as unknown as { data: any[] | null, count: number | null };
+  if (status) query = query.eq("status", status);
   else query = query.eq("status", "active");
+  const { data: players, count } = await query as unknown as { data: any[] | null, count: number | null };
 
   const loc = locale as "fr" | "en";
 
