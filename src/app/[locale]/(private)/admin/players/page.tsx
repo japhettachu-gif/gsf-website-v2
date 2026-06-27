@@ -28,7 +28,6 @@ export default async function AdminPlayersPage({
   const { data: players, count } = await query as unknown as { data: any[] | null, count: number | null };
   else query = query.eq("status", "active");
 
-  const { data: players, count } = await query;
   const loc = locale as "fr" | "en";
 
   return (
