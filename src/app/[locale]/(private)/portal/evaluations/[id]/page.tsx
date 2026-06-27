@@ -51,7 +51,7 @@ export default async function EvaluationDetailPage({
     .eq("id", id)
     .eq("player_id", player.id)
     .eq("status", "published")
-    .single() as unknown as { data: any | null } as unknown as { data: any | null };
+    .single() as unknown as { data: any | null };
 
   if (!ev) notFound();
 
@@ -60,7 +60,7 @@ export default async function EvaluationDetailPage({
     .from("evaluation_scores")
     .select("rating, comment, evaluation_criteria(pillar, name_fr, name_en, sort_order, position_specific)")
     .eq("evaluation_id", id)
-    .order("evaluation_criteria(sort_order)");
+    .order("evaluation_criteria(sort_order)") as unknown as { data: any[] | null };
 
   // Grouper par pilier
   const byPillar = (scores ?? []).reduce<Record<string, typeof scores>>((acc, score) => {
