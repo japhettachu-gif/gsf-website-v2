@@ -40,7 +40,7 @@ export default async function EvaluationDetailPage({
     .from("players")
     .select("id, first_name, last_name, position")
     .eq("user_id", user.id)
-    .single();
+    .single() as unknown as { data: any | null };
 
   if (!player) redirect(`/${locale}/portal/evaluations`);
 
@@ -51,7 +51,7 @@ export default async function EvaluationDetailPage({
     .eq("id", id)
     .eq("player_id", player.id)
     .eq("status", "published")
-    .single();
+    .single() as unknown as { data: any | null };
 
   if (!ev) notFound();
 
