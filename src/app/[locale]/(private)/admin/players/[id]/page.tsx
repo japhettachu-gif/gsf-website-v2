@@ -16,7 +16,7 @@ export default async function EditPlayerPage({
     .from("players")
     .select("*")
     .eq("id", id)
-    .single();
+    .single() as unknown as { data: any | null };
 
   if (!player) notFound();
 
