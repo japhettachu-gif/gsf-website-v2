@@ -21,7 +21,7 @@ export default async function BulletinDetailPage({
     .select('player_id')
     .eq('user_id', user.id)
     .eq('player_id', params.child_id)
-    .single()
+    .single() as unknown as { data: any | null }
   if (!parentLink) notFound()
 
   const [evaluation, scores] = await Promise.all([

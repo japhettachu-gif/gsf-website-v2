@@ -21,7 +21,7 @@ export default async function PortalLayout({
     .from("profiles")
     .select("role, display_name, avatar_url")
     .eq("id", user.id)
-    .single();
+    .single() as unknown as { data: any | null };
 
   const allowedRoles = ["player", "parent"];
   if (!profile || !allowedRoles.includes(profile.role)) {

@@ -21,7 +21,7 @@ export default async function PlayerProfilePage({
     .from("players")
     .select("*")
     .eq("user_id", user.id)
-    .single();
+    .single() as unknown as { data: any | null };
 
   if (!player) {
     return (

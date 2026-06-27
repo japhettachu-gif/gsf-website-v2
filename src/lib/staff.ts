@@ -38,7 +38,7 @@ export async function getStaffById(id: string): Promise<StaffMember | null> {
     .from('staff')
     .select('*')
     .eq('id', id)
-    .single()
+    .single() as unknown as { data: any | null }
 
   if (error) return null
   return data
@@ -52,7 +52,7 @@ export async function createStaffMember(formData: StaffFormData): Promise<StaffM
     .from('staff')
     .insert(payload)
     .select()
-    .single()
+    .single() as unknown as { data: any | null }
 
   if (error) throw error
   return data
@@ -67,7 +67,7 @@ export async function updateStaffMember(id: string, formData: StaffFormData): Pr
     .update({ ...payload, updated_at: new Date().toISOString() })
     .eq('id', id)
     .select()
-    .single()
+    .single() as unknown as { data: any | null }
 
   if (error) throw error
   return data

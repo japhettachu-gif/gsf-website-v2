@@ -23,14 +23,14 @@ export async function getCriteriaForPosition(position: EvaluationPosition): Prom
 
 export async function createCriteria(payload: Partial<EvaluationCriteria>): Promise<EvaluationCriteria> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('evaluation_criteria').insert(payload).select().single()
+  const { data, error } = await supabase.from('evaluation_criteria').insert(payload).select().single() as unknown as { data: any | null }
   if (error) throw error
   return data
 }
 
 export async function updateCriteria(id: string, payload: Partial<EvaluationCriteria>): Promise<EvaluationCriteria> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('evaluation_criteria').update(payload).eq('id', id).select().single()
+  const { data, error } = await supabase.from('evaluation_criteria').update(payload).eq('id', id).select().single() as unknown as { data: any | null }
   if (error) throw error
   return data
 }
@@ -57,7 +57,7 @@ export async function getEvaluationById(id: string): Promise<PlayerEvaluation | 
   const { data } = await supabase
     .from('player_evaluations')
     .select(`*, player:players(id, first_name, last_name, photo_url, position), coach:staff(first_name, last_name, display_name)`)
-    .eq('id', id).single()
+    .eq('id', id).single() as unknown as { data: any | null }
   return data
 }
 
@@ -74,7 +74,7 @@ export async function getEvaluationScores(evaluationId: string): Promise<Evaluat
 
 export async function createEvaluation(payload: Partial<PlayerEvaluation>): Promise<PlayerEvaluation> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('player_evaluations').insert(payload).select().single()
+  const { data, error } = await supabase.from('player_evaluations').insert(payload).select().single() as unknown as { data: any | null }
   if (error) throw error
   return data
 }
@@ -83,7 +83,7 @@ export async function updateEvaluation(id: string, payload: Partial<PlayerEvalua
   const supabase = createClient()
   const { data, error } = await supabase
     .from('player_evaluations').update({ ...payload, updated_at: new Date().toISOString() })
-    .eq('id', id).select().single()
+    .eq('id', id).select().single() as unknown as { data: any | null }
   if (error) throw error
   return data
 }

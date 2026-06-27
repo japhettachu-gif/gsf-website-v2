@@ -19,7 +19,7 @@ export default async function PlayerSchedulePage({
     .from("players")
     .select("id, first_name, last_name, category")
     .eq("user_id", user.id)
-    .single();
+    .single() as unknown as { data: any | null };
 
   if (!player) {
     return (

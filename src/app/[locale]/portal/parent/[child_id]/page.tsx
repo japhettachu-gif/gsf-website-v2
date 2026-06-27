@@ -18,7 +18,7 @@ export default async function ChildReportsPage({ params }: { params: { child_id:
     .select('*, player:players(id, first_name, last_name, photo_url, position)')
     .eq('user_id', user.id)
     .eq('player_id', params.child_id)
-    .single()
+    .single() as unknown as { data: any | null }
 
   if (!parentLink) notFound()
 

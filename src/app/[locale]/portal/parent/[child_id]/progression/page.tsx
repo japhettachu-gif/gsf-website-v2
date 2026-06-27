@@ -17,7 +17,7 @@ export default async function ProgressionPage({ params }: { params: { child_id: 
     .select('*, player:players(id, first_name, last_name)')
     .eq('user_id', user.id)
     .eq('player_id', params.child_id)
-    .single()
+    .single() as unknown as { data: any | null }
   if (!parentLink) notFound()
 
   const player = parentLink.player as any

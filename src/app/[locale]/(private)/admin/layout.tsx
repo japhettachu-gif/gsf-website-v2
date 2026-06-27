@@ -24,7 +24,7 @@ export default async function AdminLayout({
     .from("profiles")
     .select("role, display_name, avatar_url")
     .eq("id", user.id)
-    .single() as { data: { role: string; display_name: string; avatar_url: string } | null };
+    .single() as unknown as { data: any | null } as { data: { role: string; display_name: string; avatar_url: string } | null };
 
   const allowedRoles = ["super_admin", "technical_director", "coach", "logistics"];
   if (!profile || !allowedRoles.includes(profile.role)) {

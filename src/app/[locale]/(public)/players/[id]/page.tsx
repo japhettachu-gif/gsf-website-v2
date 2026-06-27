@@ -19,7 +19,7 @@ export async function generateMetadata({
     .from("players")
     .select("first_name, last_name, position, category")
     .eq("id", id)
-    .single();
+    .single() as unknown as { data: any | null };
 
   if (!data) return { title: "Joueur — GSF" };
   return {
@@ -42,7 +42,7 @@ export default async function PlayerPage({
     .select("*")
     .eq("id", id)
     .eq("status", "active")
-    .single();
+    .single() as unknown as { data: any | null };
 
   if (!player) notFound();
 

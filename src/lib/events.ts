@@ -49,7 +49,7 @@ export async function getFeaturedEvents(): Promise<Event[]> {
 export async function getEventBySlug(slug: string): Promise<Event | null> {
   const supabase = createClient()
   const { data } = await supabase
-    .from('events').select('*').eq('slug', slug).eq('show_on_website', true).single()
+    .from('events').select('*').eq('slug', slug).eq('show_on_website', true).single() as unknown as { data: any | null }
   return data
 }
 
@@ -65,13 +65,13 @@ export async function getAllEvents(): Promise<Event[]> {
 
 export async function getEventById(id: string): Promise<Event | null> {
   const supabase = createClient()
-  const { data } = await supabase.from('events').select('*').eq('id', id).single()
+  const { data } = await supabase.from('events').select('*').eq('id', id).single() as unknown as { data: any | null }
   return data
 }
 
 export async function createEvent(payload: Partial<Event>): Promise<Event> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('events').insert(payload).select().single()
+  const { data, error } = await supabase.from('events').insert(payload).select().single() as unknown as { data: any | null }
   if (error) throw error
   return data
 }
@@ -80,7 +80,7 @@ export async function updateEvent(id: string, payload: Partial<Event>): Promise<
   const supabase = createClient()
   const { data, error } = await supabase
     .from('events').update({ ...payload, updated_at: new Date().toISOString() })
-    .eq('id', id).select().single()
+    .eq('id', id).select().single() as unknown as { data: any | null }
   if (error) throw error
   return data
 }

@@ -22,7 +22,7 @@ export default async function PlayerEvaluationsPage({
     .from("players")
     .select("id, first_name, last_name, position")
     .eq("user_id", user.id)
-    .single();
+    .single() as unknown as { data: any | null };
 
   if (!player) {
     return (

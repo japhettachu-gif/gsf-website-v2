@@ -10,7 +10,7 @@ export async function submitApplication(payload: Partial<Application>): Promise<
     .from('applications')
     .insert({ ...payload, status: 'received' })
     .select()
-    .single()
+    .single() as unknown as { data: any | null }
   if (error) throw error
   return data
 }
@@ -31,7 +31,7 @@ export async function getAllApplications(type?: Application['type']): Promise<Ap
 
 export async function getApplicationById(id: string): Promise<Application | null> {
   const supabase = createClient()
-  const { data } = await supabase.from('applications').select('*').eq('id', id).single()
+  const { data } = await supabase.from('applications').select('*').eq('id', id).single() as unknown as { data: any | null }
   return data
 }
 
@@ -53,7 +53,7 @@ export async function updateApplicationStatus(
     })
     .eq('id', id)
     .select()
-    .single()
+    .single() as unknown as { data: any | null }
   if (error) throw error
   return data
 }

@@ -41,14 +41,14 @@ export async function getAllImages(): Promise<GalleryImage[]> {
 
 export async function createImage(payload: Partial<GalleryImage>): Promise<GalleryImage> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('gallery_images').insert(payload).select().single()
+  const { data, error } = await supabase.from('gallery_images').insert(payload).select().single() as unknown as { data: any | null }
   if (error) throw error
   return data
 }
 
 export async function updateImage(id: string, payload: Partial<GalleryImage>): Promise<GalleryImage> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('gallery_images').update(payload).eq('id', id).select().single()
+  const { data, error } = await supabase.from('gallery_images').update(payload).eq('id', id).select().single() as unknown as { data: any | null }
   if (error) throw error
   return data
 }
@@ -100,7 +100,7 @@ export async function createVideo(payload: Partial<MediaVideo>): Promise<MediaVi
     ...payload,
     youtube_id: youtubeId,
     thumbnail_url: youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg` : null,
-  }).select().single()
+  }).select().single() as unknown as { data: any | null }
   if (error) throw error
   return data
 }
@@ -112,7 +112,7 @@ export async function updateVideo(id: string, payload: Partial<MediaVideo>): Pro
     ...payload,
     ...(youtubeId ? { youtube_id: youtubeId, thumbnail_url: `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg` } : {}),
     updated_at: new Date().toISOString(),
-  }).eq('id', id).select().single()
+  }).eq('id', id).select().single() as unknown as { data: any | null }
   if (error) throw error
   return data
 }

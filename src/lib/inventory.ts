@@ -17,7 +17,7 @@ export async function getAllItems(): Promise<InventoryItem[]> {
 
 export async function getItemById(id: string): Promise<InventoryItem | null> {
   const supabase = createClient()
-  const { data } = await supabase.from('inventory_items').select('*').eq('id', id).single()
+  const { data } = await supabase.from('inventory_items').select('*').eq('id', id).single() as unknown as { data: any | null }
   return data
 }
 
@@ -34,7 +34,7 @@ export async function getLowStockItems(): Promise<InventoryItem[]> {
 
 export async function createItem(payload: Partial<InventoryItem>): Promise<InventoryItem> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('inventory_items').insert(payload).select().single()
+  const { data, error } = await supabase.from('inventory_items').insert(payload).select().single() as unknown as { data: any | null }
   if (error) throw error
   return data
 }
@@ -44,7 +44,7 @@ export async function updateItem(id: string, payload: Partial<InventoryItem>): P
   const { data, error } = await supabase
     .from('inventory_items')
     .update({ ...payload, updated_at: new Date().toISOString() })
-    .eq('id', id).select().single()
+    .eq('id', id).select().single() as unknown as { data: any | null }
   if (error) throw error
   return data
 }
@@ -69,7 +69,7 @@ export async function getAllRequests(): Promise<EquipmentRequest[]> {
 
 export async function createRequest(payload: Partial<EquipmentRequest>): Promise<EquipmentRequest> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('equipment_requests').insert(payload).select().single()
+  const { data, error } = await supabase.from('equipment_requests').insert(payload).select().single() as unknown as { data: any | null }
   if (error) throw error
   return data
 }
@@ -90,7 +90,7 @@ export async function updateRequestStatus(
       reviewed_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     })
-    .eq('id', id).select().single()
+    .eq('id', id).select().single() as unknown as { data: any | null }
   if (error) throw error
   return data
 }

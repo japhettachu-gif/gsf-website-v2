@@ -24,7 +24,7 @@ export async function getProgramBySlug(slug: string): Promise<Program | null> {
     .select('*')
     .eq('slug', slug)
     .eq('show_on_website', true)
-    .single()
+    .single() as unknown as { data: any | null }
   return data
 }
 
@@ -43,13 +43,13 @@ export async function getAllPrograms(): Promise<Program[]> {
 
 export async function getProgramById(id: string): Promise<Program | null> {
   const supabase = createClient()
-  const { data } = await supabase.from('programs').select('*').eq('id', id).single()
+  const { data } = await supabase.from('programs').select('*').eq('id', id).single() as unknown as { data: any | null }
   return data
 }
 
 export async function createProgram(payload: Partial<Program>): Promise<Program> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('programs').insert(payload).select().single()
+  const { data, error } = await supabase.from('programs').insert(payload).select().single() as unknown as { data: any | null }
   if (error) throw error
   return data
 }
@@ -58,7 +58,7 @@ export async function updateProgram(id: string, payload: Partial<Program>): Prom
   const supabase = createClient()
   const { data, error } = await supabase
     .from('programs').update({ ...payload, updated_at: new Date().toISOString() })
-    .eq('id', id).select().single()
+    .eq('id', id).select().single() as unknown as { data: any | null }
   if (error) throw error
   return data
 }
@@ -105,13 +105,13 @@ export async function getSessionById(id: string): Promise<TrainingSession | null
   const { data } = await supabase
     .from('training_sessions')
     .select(`*, program:programs(*), coach:staff(first_name, last_name, display_name)`)
-    .eq('id', id).single()
+    .eq('id', id).single() as unknown as { data: any | null }
   return data
 }
 
 export async function createSession(payload: Partial<TrainingSession>): Promise<TrainingSession> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('training_sessions').insert(payload).select().single()
+  const { data, error } = await supabase.from('training_sessions').insert(payload).select().single() as unknown as { data: any | null }
   if (error) throw error
   return data
 }
@@ -120,7 +120,7 @@ export async function updateSession(id: string, payload: Partial<TrainingSession
   const supabase = createClient()
   const { data, error } = await supabase
     .from('training_sessions').update({ ...payload, updated_at: new Date().toISOString() })
-    .eq('id', id).select().single()
+    .eq('id', id).select().single() as unknown as { data: any | null }
   if (error) throw error
   return data
 }
