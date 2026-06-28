@@ -47,7 +47,7 @@ export default async function PlayerSchedulePage({
         .from("attendances")
         .select("session_id, status")
         .eq("player_id", player.id)
-        .in("session_id", sessionIds)
+        .in("session_id", sessionIds) as unknown as { data: any[] | null }
     : { data: [] };
 
   const attendanceMap = Object.fromEntries(
