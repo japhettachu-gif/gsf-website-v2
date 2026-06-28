@@ -105,14 +105,14 @@ export function PlayerForm({ player, mode }: PlayerFormProps) {
         if (error) throw error;
         const photoUrl = await uploadPhoto(data.id);
         if (photoUrl) {
-          await supabase.from("players").update({ photo_url: photoUrl } as any).eq("id", data.id);
+          await supabase.from("players").update({ photo_url: photoUrl }).eq("id", data.id);
         }
         router.push(`/${locale}/admin/players`);
       } else if (player?.id) {
         const photoUrl = await uploadPhoto(player.id);
         const { error } = await supabase
           .from("players")
-          .update({ ...payload, photo_url: photoUrl })
+          .update({ ...payload, photo_url: photoUrl } as any)
           .eq("id", player.id);
         if (error) throw error;
         router.push(`/${locale}/admin/players`);
