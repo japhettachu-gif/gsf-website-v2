@@ -30,7 +30,7 @@ export default async function PlayersPage({
     .from("players")
     .select("id, first_name, last_name, category, position, photo_url, city, birth_date, status")
     .eq("status", "active")
-    .order("last_name");
+    .order("last_name") as unknown as { data: any[] | null };
 
   return (
     <PageLayout>
