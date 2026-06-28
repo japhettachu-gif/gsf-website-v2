@@ -37,7 +37,7 @@ export default async function PlayerEvaluationsPage({
     .select("id, type, period_start, period_end, status, published_at, general_comment_fr, general_comment_en")
     .eq("player_id", player.id)
     .eq("status", "published")
-    .order("period_end", { ascending: false });
+    .order("period_end", { ascending: false }) as unknown as { data: any[] | null };
 
   const typeLabel = (type: string) => {
     const map: Record<string, Record<string, string>> = {
