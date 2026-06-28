@@ -99,7 +99,7 @@ export function PlayerForm({ player, mode }: PlayerFormProps) {
       if (mode === "create") {
         const { data, error } = await supabase
           .from("players")
-          .insert(payload)
+          .insert(payload as any)
           .select("id")
           .single() as unknown as { data: any | null, error: any | null };
         if (error) throw error;
