@@ -53,7 +53,7 @@ export default async function HomePage({
       .limit(10),
     supabase.from("players").select("*", { count: "exact", head: true }).eq("status", "active"),
     supabase.from("partners").select("*", { count: "exact", head: true }).eq("active", true),
-  ]);
+  ]) as unknown as [{ data: any[] | null }, { data: any[] | null }, { count: number | null }, { count: number | null }];
 
   const programmes = [
     { key: "u10", icon: Users },
