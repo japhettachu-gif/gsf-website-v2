@@ -38,7 +38,7 @@ export default async function PlayerSchedulePage({
     .gte("date", today)
     .eq("status", "planned")
     .order("date")
-    .limit(10);
+    .limit(10) as unknown as { data: any[] | null };
 
   // Présences du joueur
   const sessionIds = sessions?.map((s) => s.id) ?? [];
