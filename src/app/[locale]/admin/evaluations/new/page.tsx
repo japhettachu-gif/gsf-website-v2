@@ -9,10 +9,10 @@ export const metadata = { title: 'Nouveau Rapport | GSF Admin' }
 export default async function NewEvaluationPage({ searchParams }: { searchParams: { player_id?: string } }) {
   const supabase = createClient()
   const { data: players } = await supabase
-    .from('players').select('id, first_name, last_name, position').eq('status', 'active').order('last_name')
+    .from('players').select('id, first_name, last_name, position').eq('status', 'active').order('last_name') as unknown as { data: any[] | null }
   const { data: coaches } = await supabase
     .from('staff').select('id, first_name, last_name, display_name').eq('status', 'active')
-    .in('role', ['head_coach','assistant_coach','goalkeeper_coach','fitness_coach']).order('last_name')
+    .in('role', ['head_coach','assistant_coach','goalkeeper_coach','fitness_coach']).order('last_name') as unknown as { data: any[] | null }
 
   const selectedPlayerId = searchParams.player_id ?? players?.[0]?.id ?? ''
   const selectedPlayer = players?.find(p => p.id === selectedPlayerId)
