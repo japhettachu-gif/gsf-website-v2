@@ -101,7 +101,7 @@ export function PlayerForm({ player, mode }: PlayerFormProps) {
           .from("players")
           .insert(payload)
           .select("id")
-          .single() as unknown as { data: any | null };
+          .single() as unknown as { data: any | null, error: any | null };
         if (error) throw error;
         const photoUrl = await uploadPhoto(data.id);
         if (photoUrl) {
