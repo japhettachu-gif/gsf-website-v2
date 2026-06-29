@@ -99,7 +99,7 @@ export function StaffForm({ member, locale = 'fr' }: StaffFormProps) {
         // Update photo url separately
         const { createClient } = await import('@/lib/supabase/client')
         const supabase = createClient()
-        await supabase.from('staff').update({ photo_url: url }).eq('id', savedMember.id)
+        await (supabase.from('staff') as any).update({ photo_url: url }).eq('id', savedMember.id)
       }
 
       router.push('/admin/staff')
