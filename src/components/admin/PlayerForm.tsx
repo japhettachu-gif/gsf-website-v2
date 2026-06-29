@@ -110,9 +110,8 @@ export function PlayerForm({ player, mode }: PlayerFormProps) {
         router.push(`/${locale}/admin/players`);
       } else if (player?.id) {
         const photoUrl = await uploadPhoto(player.id);
-        const { error } = await supabase
-          .from("players")
-          .update({ ...payload, photo_url: photoUrl } as any)
+        const { error } = await (supabase.from("players") as any)
+          .update({ ...payload, photo_url: photoUrl })
           .eq("id", player.id);
         if (error) throw error;
         router.push(`/${locale}/admin/players`);
