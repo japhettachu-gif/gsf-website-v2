@@ -10,7 +10,7 @@ export async function submitApplication(payload: Partial<Application>): Promise<
     .from('applications')
     .insert({ ...payload, status: 'received' })
     .select()
-    .single() as unknown as { data: any | null }
+    .single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
@@ -24,7 +24,7 @@ export async function getAllApplications(type?: Application['type']): Promise<Ap
     .select('*')
     .order('created_at', { ascending: false })
   if (type) query = query.eq('type', type)
-  const { data, error } = await query
+  const { data, error } = await query as unknown as { data: any[] | null, error: any | null }
   if (error) throw error
   return data ?? []
 }
@@ -53,14 +53,14 @@ export async function updateApplicationStatus(
     })
     .eq('id', id)
     .select()
-    .single() as unknown as { data: any | null }
+    .single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
 
 export async function getApplicationStats() {
   const supabase = createClient()
-  const { data } = await supabase.from('applications').select('type, status')
+  const { data } = await supabase.from('applications').select('type, status') as unknown as { data: any[] | null }
   const apps = data ?? []
   return {
     total:       apps.length,
