@@ -1,8 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
-
 import type { Competition, Match } from '@/types/competitions'
-
-// ─── COMPETITIONS PUBLIC ─────────────────────────────────────────────────────
 
 export async function getPublicCompetitions(): Promise<Competition[]> {
   const supabase = createClient()
@@ -61,8 +58,6 @@ export async function getUpcomingMatches(limit = 5): Promise<Match[]> {
   return data ?? []
 }
 
-// ─── COMPETITIONS ADMIN ──────────────────────────────────────────────────────
-
 export async function getAllCompetitions(): Promise<Competition[]> {
   const supabase = createClient()
   const { data, error } = await supabase
@@ -80,7 +75,7 @@ export async function getCompetitionById(id: string): Promise<Competition | null
 
 export async function createCompetition(payload: Partial<Competition>): Promise<Competition> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('competitions').insert(payload).select().single() as unknown as { data: any | null }
+  const { data, error } = await supabase.from('competitions').insert(payload).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
@@ -89,7 +84,7 @@ export async function updateCompetition(id: string, payload: Partial<Competition
   const supabase = createClient()
   const { data, error } = await supabase
     .from('competitions').update({ ...payload, updated_at: new Date().toISOString() })
-    .eq('id', id).select().single() as unknown as { data: any | null }
+    .eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
@@ -99,8 +94,6 @@ export async function deleteCompetition(id: string): Promise<void> {
   const { error } = await supabase.from('competitions').delete().eq('id', id)
   if (error) throw error
 }
-
-// ─── MATCHES ADMIN ───────────────────────────────────────────────────────────
 
 export async function getAllMatches(): Promise<Match[]> {
   const supabase = createClient()
@@ -121,7 +114,7 @@ export async function getMatchById(id: string): Promise<Match | null> {
 
 export async function createMatch(payload: Partial<Match>): Promise<Match> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('matches').insert(payload).select().single() as unknown as { data: any | null }
+  const { data, error } = await supabase.from('matches').insert(payload).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
@@ -130,7 +123,7 @@ export async function updateMatch(id: string, payload: Partial<Match>): Promise<
   const supabase = createClient()
   const { data, error } = await supabase
     .from('matches').update({ ...payload, updated_at: new Date().toISOString() })
-    .eq('id', id).select().single() as unknown as { data: any | null }
+    .eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }

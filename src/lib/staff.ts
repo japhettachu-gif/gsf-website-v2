@@ -1,8 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
-
 import type { StaffMember, StaffFormData } from '@/types/staff'
-
-// ─── PUBLIC (client-side) ───────────────────────────────────────────────────
 
 export async function getPublicStaff(): Promise<StaffMember[]> {
   const supabase = createClient()
@@ -13,12 +10,9 @@ export async function getPublicStaff(): Promise<StaffMember[]> {
     .eq('status', 'active')
     .order('display_order', { ascending: true, nullsFirst: false })
     .order('last_name', { ascending: true })
-
   if (error) throw error
   return data ?? []
 }
-
-// ─── ADMIN (server-side) ────────────────────────────────────────────────────
 
 export async function getAllStaff(): Promise<StaffMember[]> {
   const supabase = createClient()
@@ -27,7 +21,6 @@ export async function getAllStaff(): Promise<StaffMember[]> {
     .select('*')
     .order('display_order', { ascending: true, nullsFirst: false })
     .order('last_name', { ascending: true })
-
   if (error) throw error
   return data ?? []
 }
@@ -38,8 +31,7 @@ export async function getStaffById(id: string): Promise<StaffMember | null> {
     .from('staff')
     .select('*')
     .eq('id', id)
-    .single() as unknown as { data: any | null }
-
+    .single() as unknown as { data: any | null, error: any | null }
   if (error) return null
   return data
 }
@@ -47,13 +39,11 @@ export async function getStaffById(id: string): Promise<StaffMember | null> {
 export async function createStaffMember(formData: StaffFormData): Promise<StaffMember> {
   const supabase = createClient()
   const payload = buildPayload(formData)
-
   const { data, error } = await supabase
     .from('staff')
     .insert(payload)
     .select()
-    .single() as unknown as { data: any | null }
-
+    .single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
@@ -61,14 +51,12 @@ export async function createStaffMember(formData: StaffFormData): Promise<StaffM
 export async function updateStaffMember(id: string, formData: StaffFormData): Promise<StaffMember> {
   const supabase = createClient()
   const payload = buildPayload(formData)
-
   const { data, error } = await supabase
     .from('staff')
     .update({ ...payload, updated_at: new Date().toISOString() })
     .eq('id', id)
     .select()
-    .single() as unknown as { data: any | null }
-
+    .single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
@@ -83,18 +71,13 @@ export async function uploadStaffPhoto(file: File, staffId: string): Promise<str
   const supabase = createClient()
   const ext = file.name.split('.').pop()
   const path = `staff/${staffId}/photo.${ext}`
-
   const { error: uploadError } = await supabase.storage
     .from('gsf-media')
     .upload(path, file, { upsert: true })
-
   if (uploadError) throw uploadError
-
   const { data } = supabase.storage.from('gsf-media').getPublicUrl(path)
   return data.publicUrl
 }
-
-// ─── HELPERS ────────────────────────────────────────────────────────────────
 
 function buildPayload(f: StaffFormData) {
   return {

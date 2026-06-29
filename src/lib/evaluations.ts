@@ -1,8 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
-
 import type { EvaluationCriteria, PlayerEvaluation, EvaluationScore, EvaluationPosition } from '@/types/evaluations'
-
-// ─── CRITERIA ────────────────────────────────────────────────────────────────
 
 export async function getAllCriteria(): Promise<EvaluationCriteria[]> {
   const supabase = createClient()
@@ -23,14 +20,14 @@ export async function getCriteriaForPosition(position: EvaluationPosition): Prom
 
 export async function createCriteria(payload: Partial<EvaluationCriteria>): Promise<EvaluationCriteria> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('evaluation_criteria').insert(payload).select().single() as unknown as { data: any | null }
+  const { data, error } = await supabase.from('evaluation_criteria').insert(payload).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
 
 export async function updateCriteria(id: string, payload: Partial<EvaluationCriteria>): Promise<EvaluationCriteria> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('evaluation_criteria').update(payload).eq('id', id).select().single() as unknown as { data: any | null }
+  const { data, error } = await supabase.from('evaluation_criteria').update(payload).eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
@@ -39,8 +36,6 @@ export async function toggleCriteria(id: string, active: boolean): Promise<void>
   const supabase = createClient()
   await supabase.from('evaluation_criteria').update({ active }).eq('id', id)
 }
-
-// ─── EVALUATIONS ADMIN ───────────────────────────────────────────────────────
 
 export async function getAllEvaluations(): Promise<PlayerEvaluation[]> {
   const supabase = createClient()
@@ -74,7 +69,7 @@ export async function getEvaluationScores(evaluationId: string): Promise<Evaluat
 
 export async function createEvaluation(payload: Partial<PlayerEvaluation>): Promise<PlayerEvaluation> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('player_evaluations').insert(payload).select().single() as unknown as { data: any | null }
+  const { data, error } = await supabase.from('player_evaluations').insert(payload).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
@@ -83,7 +78,7 @@ export async function updateEvaluation(id: string, payload: Partial<PlayerEvalua
   const supabase = createClient()
   const { data, error } = await supabase
     .from('player_evaluations').update({ ...payload, updated_at: new Date().toISOString() })
-    .eq('id', id).select().single() as unknown as { data: any | null }
+    .eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
@@ -109,8 +104,6 @@ export async function publishEvaluation(id: string): Promise<void> {
     updated_at: new Date().toISOString(),
   }).eq('id', id)
 }
-
-// ─── PARENT PORTAL ───────────────────────────────────────────────────────────
 
 export async function getChildrenForParent(userId: string) {
   const supabase = createClient()
