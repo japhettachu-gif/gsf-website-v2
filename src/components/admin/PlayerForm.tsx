@@ -105,7 +105,7 @@ export function PlayerForm({ player, mode }: PlayerFormProps) {
         if (error) throw error;
         const photoUrl = await uploadPhoto(data.id);
         if (photoUrl) {
-          await supabase.from("players").update({ photo_url: photoUrl } as any).eq("id", data.id);
+          await (supabase.from("players") as any).update({ photo_url: photoUrl }).eq("id", data.id);
         }
         router.push(`/${locale}/admin/players`);
       } else if (player?.id) {
