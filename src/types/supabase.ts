@@ -653,6 +653,66 @@ export type Database = {
           active?: boolean;
         };
       };
+staff: {
+        Row: {
+          id: string;
+          first_name: string;
+          last_name: string;
+          display_name: string | null;
+          role: string;
+          photo_url: string | null;
+          status: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          first_name: string;
+          last_name: string;
+          display_name?: string | null;
+          role: string;
+          photo_url?: string | null;
+          status?: string;
+          created_at?: string;
+        };
+        Update: {
+          first_name?: string;
+          last_name?: string;
+          display_name?: string | null;
+          role?: string;
+          photo_url?: string | null;
+          status?: string;
+        };
+      };
+      competitions: {
+        Row: { id: string; [key: string]: any };
+        Insert: { id?: string; [key: string]: any };
+        Update: { [key: string]: any };
+      };
+      equipment_requests: {
+        Row: { id: string; [key: string]: any };
+        Insert: { id?: string; [key: string]: any };
+        Update: { [key: string]: any };
+      };
+      events: {
+        Row: { id: string; [key: string]: any };
+        Insert: { id?: string; [key: string]: any };
+        Update: { [key: string]: any };
+      };
+      inventory_items: {
+        Row: { id: string; [key: string]: any };
+        Insert: { id?: string; [key: string]: any };
+        Update: { [key: string]: any };
+      };
+      media_videos: {
+        Row: { id: string; [key: string]: any };
+        Insert: { id?: string; [key: string]: any };
+        Update: { [key: string]: any };
+      };
+      programs: {
+        Row: { id: string; [key: string]: any };
+        Insert: { id?: string; [key: string]: any };
+        Update: { [key: string]: any };
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
