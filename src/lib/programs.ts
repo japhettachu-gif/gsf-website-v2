@@ -1,8 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
-
 import type { Program, TrainingSession } from '@/types/programs'
-
-// ─── PROGRAMS — PUBLIC ───────────────────────────────────────────────────────
 
 export async function getPublicPrograms(): Promise<Program[]> {
   const supabase = createClient()
@@ -28,8 +25,6 @@ export async function getProgramBySlug(slug: string): Promise<Program | null> {
   return data
 }
 
-// ─── PROGRAMS — ADMIN ────────────────────────────────────────────────────────
-
 export async function getAllPrograms(): Promise<Program[]> {
   const supabase = createClient()
   const { data, error } = await supabase
@@ -49,7 +44,7 @@ export async function getProgramById(id: string): Promise<Program | null> {
 
 export async function createProgram(payload: Partial<Program>): Promise<Program> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('programs').insert(payload).select().single() as unknown as { data: any | null }
+  const { data, error } = await supabase.from('programs').insert(payload).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
@@ -58,7 +53,7 @@ export async function updateProgram(id: string, payload: Partial<Program>): Prom
   const supabase = createClient()
   const { data, error } = await supabase
     .from('programs').update({ ...payload, updated_at: new Date().toISOString() })
-    .eq('id', id).select().single() as unknown as { data: any | null }
+    .eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
@@ -68,8 +63,6 @@ export async function deleteProgram(id: string): Promise<void> {
   const { error } = await supabase.from('programs').delete().eq('id', id)
   if (error) throw error
 }
-
-// ─── SESSIONS — PUBLIC ───────────────────────────────────────────────────────
 
 export async function getPublicSchedule(): Promise<TrainingSession[]> {
   const supabase = createClient()
@@ -86,8 +79,6 @@ export async function getPublicSchedule(): Promise<TrainingSession[]> {
   if (error) throw error
   return data ?? []
 }
-
-// ─── SESSIONS — ADMIN ────────────────────────────────────────────────────────
 
 export async function getAllSessions(): Promise<TrainingSession[]> {
   const supabase = createClient()
@@ -111,7 +102,7 @@ export async function getSessionById(id: string): Promise<TrainingSession | null
 
 export async function createSession(payload: Partial<TrainingSession>): Promise<TrainingSession> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('training_sessions').insert(payload).select().single() as unknown as { data: any | null }
+  const { data, error } = await supabase.from('training_sessions').insert(payload).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
@@ -120,7 +111,7 @@ export async function updateSession(id: string, payload: Partial<TrainingSession
   const supabase = createClient()
   const { data, error } = await supabase
     .from('training_sessions').update({ ...payload, updated_at: new Date().toISOString() })
-    .eq('id', id).select().single() as unknown as { data: any | null }
+    .eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }

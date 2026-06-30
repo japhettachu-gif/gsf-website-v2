@@ -1,5 +1,4 @@
 import { createClient } from '@/lib/supabase/client'
-
 import type { NewsArticle, ArticleStatus } from '@/types/news'
 
 export async function getPublishedArticles(limit?: number): Promise<NewsArticle[]> {
@@ -36,7 +35,7 @@ export async function getArticleById(id: string): Promise<NewsArticle | null> {
 
 export async function createArticle(payload: Partial<NewsArticle>): Promise<NewsArticle> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('news_articles').insert(payload).select().single() as unknown as { data: any | null }
+  const { data, error } = await supabase.from('news_articles').insert(payload).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
@@ -44,7 +43,7 @@ export async function createArticle(payload: Partial<NewsArticle>): Promise<News
 export async function updateArticle(id: string, payload: Partial<NewsArticle>): Promise<NewsArticle> {
   const supabase = createClient()
   const { data, error } = await supabase.from('news_articles')
-    .update({ ...payload, updated_at: new Date().toISOString() }).eq('id', id).select().single() as unknown as { data: any | null }
+    .update({ ...payload, updated_at: new Date().toISOString() }).eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
@@ -65,4 +64,5 @@ export async function publishArticle(id: string): Promise<void> {
 function slugify(t: string) {
   return t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'')
 }
+
 export { slugify }

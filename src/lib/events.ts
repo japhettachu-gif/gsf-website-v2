@@ -1,8 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
-
 import type { Event } from '@/types/events'
-
-// ─── PUBLIC ──────────────────────────────────────────────────────────────────
 
 export async function getPublicEvents(): Promise<Event[]> {
   const supabase = createClient()
@@ -53,8 +50,6 @@ export async function getEventBySlug(slug: string): Promise<Event | null> {
   return data
 }
 
-// ─── ADMIN ───────────────────────────────────────────────────────────────────
-
 export async function getAllEvents(): Promise<Event[]> {
   const supabase = createClient()
   const { data, error } = await supabase
@@ -71,7 +66,7 @@ export async function getEventById(id: string): Promise<Event | null> {
 
 export async function createEvent(payload: Partial<Event>): Promise<Event> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('events').insert(payload).select().single() as unknown as { data: any | null }
+  const { data, error } = await supabase.from('events').insert(payload).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
@@ -80,7 +75,7 @@ export async function updateEvent(id: string, payload: Partial<Event>): Promise<
   const supabase = createClient()
   const { data, error } = await supabase
     .from('events').update({ ...payload, updated_at: new Date().toISOString() })
-    .eq('id', id).select().single() as unknown as { data: any | null }
+    .eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }

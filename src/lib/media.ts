@@ -1,8 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
-
 import type { GalleryImage, MediaVideo } from '@/types/media'
-
-// ─── GALLERY ─────────────────────────────────────────────────────────────────
 
 export async function getPublicGallery(album?: string): Promise<GalleryImage[]> {
   const supabase = createClient()
@@ -20,13 +17,13 @@ export async function getFeaturedImages(limit = 6): Promise<GalleryImage[]> {
   const supabase = createClient()
   const { data } = await supabase.from('gallery_images').select('*')
     .eq('show_on_website', true).eq('is_featured', true)
-    .order('display_order', { ascending: true, nullsFirst: false }).limit(limit)
+    .order('display_order', { ascending: true, nullsFirst: false }).limit(limit) as unknown as { data: any[] | null }
   return data ?? []
 }
 
 export async function getGalleryAlbums(): Promise<string[]> {
   const supabase = createClient()
-  const { data } = await supabase.from('gallery_images').select('album').eq('show_on_website', true).not('album', 'is', null)
+  const { data } = await supabase.from('gallery_images').select('album').eq('show_on_website', true).not('album', 'is', null) as unknown as { data: any[] | null }
   const albums = Array.from(new Set((data ?? []).map(d => d.album).filter(Boolean))) as string[]
   return albums
 }
@@ -41,14 +38,14 @@ export async function getAllImages(): Promise<GalleryImage[]> {
 
 export async function createImage(payload: Partial<GalleryImage>): Promise<GalleryImage> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('gallery_images').insert(payload).select().single() as unknown as { data: any | null }
+  const { data, error } = await supabase.from('gallery_images').insert(payload).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
 
 export async function updateImage(id: string, payload: Partial<GalleryImage>): Promise<GalleryImage> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('gallery_images').update(payload).eq('id', id).select().single() as unknown as { data: any | null }
+  const { data, error } = await supabase.from('gallery_images').update(payload).eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
@@ -68,8 +65,6 @@ export async function uploadImage(file: File, album?: string): Promise<string> {
   const { data } = supabase.storage.from('gsf-media').getPublicUrl(path)
   return data.publicUrl
 }
-
-// ─── VIDEOS ──────────────────────────────────────────────────────────────────
 
 export function extractYoutubeId(url: string): string | null {
   const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/)
@@ -100,7 +95,7 @@ export async function createVideo(payload: Partial<MediaVideo>): Promise<MediaVi
     ...payload,
     youtube_id: youtubeId,
     thumbnail_url: youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg` : null,
-  }).select().single() as unknown as { data: any | null }
+  }).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
@@ -112,7 +107,7 @@ export async function updateVideo(id: string, payload: Partial<MediaVideo>): Pro
     ...payload,
     ...(youtubeId ? { youtube_id: youtubeId, thumbnail_url: `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg` } : {}),
     updated_at: new Date().toISOString(),
-  }).eq('id', id).select().single() as unknown as { data: any | null }
+  }).eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
