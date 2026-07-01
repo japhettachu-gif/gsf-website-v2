@@ -50,7 +50,7 @@ export async function updateApplicationStatus(
       review_notes: notes ?? null,
       reviewed_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
-    })
+    } as any)
     .eq('id', id)
     .select()
     .single() as unknown as { data: any | null, error: any | null }
