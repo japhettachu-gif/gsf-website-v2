@@ -8,7 +8,7 @@ export async function submitApplication(payload: Partial<Application>): Promise<
   const supabase = createClient()
   const { data, error } = await supabase
     .from('applications')
-    .insert({ ...payload, status: 'received' })
+    .insert({ ...payload, status: 'received' } as any)
     .select()
     .single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
