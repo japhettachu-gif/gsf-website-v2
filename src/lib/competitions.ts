@@ -75,7 +75,7 @@ export async function getCompetitionById(id: string): Promise<Competition | null
 
 export async function createCompetition(payload: Partial<Competition>): Promise<Competition> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('competitions').insert(payload).select().single() as unknown as { data: any | null, error: any | null }
+  const { data, error } = await supabase.from('competitions').insert(payload as any).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
@@ -83,7 +83,7 @@ export async function createCompetition(payload: Partial<Competition>): Promise<
 export async function updateCompetition(id: string, payload: Partial<Competition>): Promise<Competition> {
   const supabase = createClient()
   const { data, error } = await supabase
-    .from('competitions').update({ ...payload, updated_at: new Date().toISOString() })
+    .from('competitions').update({ ...payload, updated_at: new Date().toISOString() } as any)
     .eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
@@ -114,7 +114,7 @@ export async function getMatchById(id: string): Promise<Match | null> {
 
 export async function createMatch(payload: Partial<Match>): Promise<Match> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('matches').insert(payload).select().single() as unknown as { data: any | null, error: any | null }
+  const { data, error } = await supabase.from('matches').insert(payload as any).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
@@ -122,7 +122,7 @@ export async function createMatch(payload: Partial<Match>): Promise<Match> {
 export async function updateMatch(id: string, payload: Partial<Match>): Promise<Match> {
   const supabase = createClient()
   const { data, error } = await supabase
-    .from('matches').update({ ...payload, updated_at: new Date().toISOString() })
+    .from('matches').update({ ...payload, updated_at: new Date().toISOString() } as any)
     .eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data

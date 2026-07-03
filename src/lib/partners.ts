@@ -25,14 +25,14 @@ export async function getPartnerById(id: string): Promise<Partner | null> {
 
 export async function createPartner(payload: Partial<Partner>): Promise<Partner> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('partners').insert(payload).select().single() as unknown as { data: any | null, error: any | null }
+  const { data, error } = await supabase.from('partners').insert(payload as any).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
 
 export async function updatePartner(id: string, payload: Partial<Partner>): Promise<Partner> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('partners').update({ ...payload, updated_at: new Date().toISOString() }).eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
+  const { data, error } = await supabase.from('partners').update({ ...payload, updated_at: new Date().toISOString() } as any).eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
@@ -68,14 +68,14 @@ export async function getAlumniById(id: string): Promise<Alumni | null> {
 
 export async function createAlumni(payload: Partial<Alumni>): Promise<Alumni> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('alumni').insert(payload).select().single() as unknown as { data: any | null, error: any | null }
+  const { data, error } = await supabase.from('alumni').insert(payload as any).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
 
 export async function updateAlumni(id: string, payload: Partial<Alumni>): Promise<Alumni> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('alumni').update({ ...payload, updated_at: new Date().toISOString() }).eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
+  const { data, error } = await supabase.from('alumni').update({ ...payload, updated_at: new Date().toISOString() } as any).eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }

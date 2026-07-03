@@ -35,7 +35,7 @@ export async function getArticleById(id: string): Promise<NewsArticle | null> {
 
 export async function createArticle(payload: Partial<NewsArticle>): Promise<NewsArticle> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('news_articles').insert(payload).select().single() as unknown as { data: any | null, error: any | null }
+  const { data, error } = await supabase.from('news_articles').insert(payload as any).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
@@ -43,7 +43,7 @@ export async function createArticle(payload: Partial<NewsArticle>): Promise<News
 export async function updateArticle(id: string, payload: Partial<NewsArticle>): Promise<NewsArticle> {
   const supabase = createClient()
   const { data, error } = await supabase.from('news_articles')
-    .update({ ...payload, updated_at: new Date().toISOString() }).eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
+    .update({ ...payload, updated_at: new Date().toISOString() } as any).eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
@@ -58,7 +58,7 @@ export async function publishArticle(id: string): Promise<void> {
   const supabase = createClient()
   await supabase.from('news_articles').update({
     status: 'published', published_at: new Date().toISOString(), updated_at: new Date().toISOString()
-  }).eq('id', id)
+  } as any).eq('id', id)
 }
 
 function slugify(t: string) {

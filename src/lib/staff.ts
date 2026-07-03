@@ -41,7 +41,7 @@ export async function createStaffMember(formData: StaffFormData): Promise<StaffM
   const payload = buildPayload(formData)
   const { data, error } = await supabase
     .from('staff')
-    .insert(payload)
+    .insert(payload as any)
     .select()
     .single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
@@ -53,7 +53,7 @@ export async function updateStaffMember(id: string, formData: StaffFormData): Pr
   const payload = buildPayload(formData)
   const { data, error } = await supabase
     .from('staff')
-    .update({ ...payload, updated_at: new Date().toISOString() })
+    .update({ ...payload, updated_at: new Date().toISOString() } as any)
     .eq('id', id)
     .select()
     .single() as unknown as { data: any | null, error: any | null }

@@ -31,7 +31,7 @@ export async function getLowStockItems(): Promise<InventoryItem[]> {
 
 export async function createItem(payload: Partial<InventoryItem>): Promise<InventoryItem> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('inventory_items').insert(payload).select().single() as unknown as { data: any | null, error: any | null }
+  const { data, error } = await supabase.from('inventory_items').insert(payload as any).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
@@ -40,7 +40,7 @@ export async function updateItem(id: string, payload: Partial<InventoryItem>): P
   const supabase = createClient()
   const { data, error } = await supabase
     .from('inventory_items')
-    .update({ ...payload, updated_at: new Date().toISOString() })
+    .update({ ...payload, updated_at: new Date().toISOString() } as any)
     .eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
@@ -64,7 +64,7 @@ export async function getAllRequests(): Promise<EquipmentRequest[]> {
 
 export async function createRequest(payload: Partial<EquipmentRequest>): Promise<EquipmentRequest> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('equipment_requests').insert(payload).select().single() as unknown as { data: any | null, error: any | null }
+  const { data, error } = await supabase.from('equipment_requests').insert(payload as any).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
@@ -84,7 +84,7 @@ export async function updateRequestStatus(
       review_notes: notes ?? null,
       reviewed_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
-    })
+    } as any)
     .eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
