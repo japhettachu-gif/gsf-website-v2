@@ -51,9 +51,9 @@ export async function createStaffMember(formData: StaffFormData): Promise<StaffM
 export async function updateStaffMember(id: string, formData: StaffFormData): Promise<StaffMember> {
   const supabase = createClient()
   const payload = buildPayload(formData)
-  const { data, error } = await supabase
-    .from('staff')
-    .update({ ...payload, updated_at: new Date().toISOString() } as any)
+  const { data, error } = await (supabase
+    .from('staff') as any)
+    .update({ ...payload, updated_at: new Date().toISOString() })
     .eq('id', id)
     .select()
     .single() as unknown as { data: any | null, error: any | null }

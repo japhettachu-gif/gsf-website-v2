@@ -27,14 +27,14 @@ export async function createCriteria(payload: Partial<EvaluationCriteria>): Prom
 
 export async function updateCriteria(id: string, payload: Partial<EvaluationCriteria>): Promise<EvaluationCriteria> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('evaluation_criteria').update(payload as any).eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
+  const { data, error } = await (supabase.from('evaluation_criteria') as any).update(payload).eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
 
 export async function toggleCriteria(id: string, active: boolean): Promise<void> {
   const supabase = createClient()
-  await supabase.from('evaluation_criteria').update({ active } as any).eq('id', id)
+  await (supabase.from('evaluation_criteria') as any).update({ active }).eq('id', id)
 }
 
 export async function getAllEvaluations(): Promise<PlayerEvaluation[]> {
@@ -76,8 +76,9 @@ export async function createEvaluation(payload: Partial<PlayerEvaluation>): Prom
 
 export async function updateEvaluation(id: string, payload: Partial<PlayerEvaluation>): Promise<PlayerEvaluation> {
   const supabase = createClient()
-  const { data, error } = await supabase
-    .from('player_evaluations').update({ ...payload, updated_at: new Date().toISOString() } as any)
+  const { data, error } = await (supabase
+    .from('player_evaluations') as any)
+    .update({ ...payload, updated_at: new Date().toISOString() })
     .eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
@@ -98,11 +99,11 @@ export async function saveEvaluationScores(
 
 export async function publishEvaluation(id: string): Promise<void> {
   const supabase = createClient()
-  await supabase.from('player_evaluations').update({
+  await (supabase.from('player_evaluations') as any).update({
     status: 'published',
     published_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-  } as any).eq('id', id)
+  }).eq('id', id)
 }
 
 export async function getChildrenForParent(userId: string) {
@@ -136,7 +137,7 @@ export async function getPlayerProgressionData(playerId: string) {
     const { data: scores } = await supabase
       .from('evaluation_scores')
       .select('rating, criteria:evaluation_criteria(pillar)')
-      .eq('evaluation_id', ev.id)
+      .eq('evaluation_id', ev.id) as unknown as { data: any[] | null }
 
     const pillarScores: Record<string, number[]> = {}
     for (const s of scores ?? []) {

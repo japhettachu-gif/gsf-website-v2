@@ -82,8 +82,9 @@ export async function createCompetition(payload: Partial<Competition>): Promise<
 
 export async function updateCompetition(id: string, payload: Partial<Competition>): Promise<Competition> {
   const supabase = createClient()
-  const { data, error } = await supabase
-    .from('competitions').update({ ...payload, updated_at: new Date().toISOString() } as any)
+  const { data, error } = await (supabase
+    .from('competitions') as any)
+    .update({ ...payload, updated_at: new Date().toISOString() })
     .eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
@@ -121,8 +122,9 @@ export async function createMatch(payload: Partial<Match>): Promise<Match> {
 
 export async function updateMatch(id: string, payload: Partial<Match>): Promise<Match> {
   const supabase = createClient()
-  const { data, error } = await supabase
-    .from('matches').update({ ...payload, updated_at: new Date().toISOString() } as any)
+  const { data, error } = await (supabase
+    .from('matches') as any)
+    .update({ ...payload, updated_at: new Date().toISOString() })
     .eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data

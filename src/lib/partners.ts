@@ -32,7 +32,7 @@ export async function createPartner(payload: Partial<Partner>): Promise<Partner>
 
 export async function updatePartner(id: string, payload: Partial<Partner>): Promise<Partner> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('partners').update({ ...payload, updated_at: new Date().toISOString() } as any).eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
+  const { data, error } = await (supabase.from('partners') as any).update({ ...payload, updated_at: new Date().toISOString() }).eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }
@@ -75,7 +75,7 @@ export async function createAlumni(payload: Partial<Alumni>): Promise<Alumni> {
 
 export async function updateAlumni(id: string, payload: Partial<Alumni>): Promise<Alumni> {
   const supabase = createClient()
-  const { data, error } = await supabase.from('alumni').update({ ...payload, updated_at: new Date().toISOString() } as any).eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
+  const { data, error } = await (supabase.from('alumni') as any).update({ ...payload, updated_at: new Date().toISOString() }).eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
 }

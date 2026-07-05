@@ -51,8 +51,9 @@ export async function createProgram(payload: Partial<Program>): Promise<Program>
 
 export async function updateProgram(id: string, payload: Partial<Program>): Promise<Program> {
   const supabase = createClient()
-  const { data, error } = await supabase
-    .from('programs').update({ ...payload, updated_at: new Date().toISOString() } as any)
+  const { data, error } = await (supabase
+    .from('programs') as any)
+    .update({ ...payload, updated_at: new Date().toISOString() })
     .eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
@@ -109,8 +110,9 @@ export async function createSession(payload: Partial<TrainingSession>): Promise<
 
 export async function updateSession(id: string, payload: Partial<TrainingSession>): Promise<TrainingSession> {
   const supabase = createClient()
-  const { data, error } = await supabase
-    .from('training_sessions').update({ ...payload, updated_at: new Date().toISOString() } as any)
+  const { data, error } = await (supabase
+    .from('training_sessions') as any)
+    .update({ ...payload, updated_at: new Date().toISOString() })
     .eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data

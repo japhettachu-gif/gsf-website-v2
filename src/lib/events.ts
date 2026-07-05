@@ -73,8 +73,9 @@ export async function createEvent(payload: Partial<Event>): Promise<Event> {
 
 export async function updateEvent(id: string, payload: Partial<Event>): Promise<Event> {
   const supabase = createClient()
-  const { data, error } = await supabase
-    .from('events').update({ ...payload, updated_at: new Date().toISOString() } as any)
+  const { data, error } = await (supabase
+    .from('events') as any)
+    .update({ ...payload, updated_at: new Date().toISOString() })
     .eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data

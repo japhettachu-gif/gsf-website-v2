@@ -38,9 +38,9 @@ export async function createItem(payload: Partial<InventoryItem>): Promise<Inven
 
 export async function updateItem(id: string, payload: Partial<InventoryItem>): Promise<InventoryItem> {
   const supabase = createClient()
-  const { data, error } = await supabase
-    .from('inventory_items')
-    .update({ ...payload, updated_at: new Date().toISOString() } as any)
+  const { data, error } = await (supabase
+    .from('inventory_items') as any)
+    .update({ ...payload, updated_at: new Date().toISOString() })
     .eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
@@ -76,15 +76,15 @@ export async function updateRequestStatus(
   notes?: string
 ): Promise<EquipmentRequest> {
   const supabase = createClient()
-  const { data, error } = await supabase
-    .from('equipment_requests')
+  const { data, error } = await (supabase
+    .from('equipment_requests') as any)
     .update({
       status,
       reviewed_by: reviewedBy,
       review_notes: notes ?? null,
       reviewed_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
-    } as any)
+    })
     .eq('id', id).select().single() as unknown as { data: any | null, error: any | null }
   if (error) throw error
   return data
