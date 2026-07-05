@@ -42,15 +42,15 @@ export async function updateApplicationStatus(
   notes?: string
 ): Promise<Application> {
   const supabase = createClient()
-  const { data, error } = await supabase
-    .from('applications')
+  const { data, error } = await (supabase
+    .from('applications') as any)
     .update({
       status,
       reviewed_by: reviewedBy,
       review_notes: notes ?? null,
       reviewed_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
-    } as any)
+    })
     .eq('id', id)
     .select()
     .single() as unknown as { data: any | null, error: any | null }
