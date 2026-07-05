@@ -93,8 +93,7 @@ export async function saveEvaluationScores(
   const { error } = await supabase.from('evaluation_scores').insert(
     scores.map(s => ({ ...s, evaluation_id: evaluationId })) as any
   )
-  )
-  if (error) throw error
+    if (error) throw error
 }
 
 export async function publishEvaluation(id: string): Promise<void> {
