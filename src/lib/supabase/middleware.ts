@@ -1,4 +1,4 @@
-import { createClient } from "@supabase/ssr";
+import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
 
 export async function updateSession(
@@ -8,7 +8,7 @@ export async function updateSession(
 ) {
   let supabaseResponse = NextResponse.next({ request });
 
-  const supabase = createClient(
+  const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
@@ -16,7 +16,7 @@ export async function updateSession(
         getAll() {
           return request.cookies.getAll();
         },
-        setAll(cookiesToSet) {
+        setAll(cookiesToSet: { name: string; value: string; options?: Record<string, unknown> }[]) {
           cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value)
           );
@@ -31,7 +31,6 @@ export async function updateSession(
 
   const { data: { user } } = await supabase.auth.getUser();
 
-  // Rediriger vers login si route protégée et non authentifié
   if (isProtected && !user) {
     const locale = request.nextUrl.pathname.split("/")[1] || "fr";
     const loginUrl = new URL(`/${locale}/login`, request.url);
@@ -39,7 +38,6 @@ export async function updateSession(
     return NextResponse.redirect(loginUrl);
   }
 
-  // Rediriger vers dashboard si déjà connecté et sur page auth
   if (isAuthPath && user) {
     const locale = request.nextUrl.pathname.split("/")[1] || "fr";
     return NextResponse.redirect(new URL(`/${locale}/dashboard`, request.url));
