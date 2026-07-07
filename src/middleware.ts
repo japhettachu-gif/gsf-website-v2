@@ -1,49 +1,53 @@
-import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
+import { updateSession } from "@/lib/supabase/middleware";
+import createMiddleware from "next-intl/middleware";
 
-export async function updateSession(
-  request: NextRequest,
-  isProtected: boolean,
-  isAuthPath: boolean
-) {
-  let supabaseResponse = NextResponse.next({ request });
+const locales = ["fr", "en"] as const;
+const defaultLocale = "fr";
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll();
-        },
-        setAll(cookiesToSet: { name: string; value: string; options?: Record<string, unknown> }[]) {
-          cookiesToSet.forEach(({ name, value }) =>
-            request.cookies.set(name, value)
-          );
-          supabaseResponse = NextResponse.next({ request });
-          cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
-          );
-        },
-      },
-    }
+const intlMiddleware = createMiddleware({
+  locales,
+  defaultLocale,
+  localePrefix: "always",
+});
+
+// Routes qui nécessitent une authentification
+const PROTECTED_PATHS = [
+  "/admin",
+  "/portal",
+  "/dashboard",
+];
+
+// Routes accessibles seulement sans auth (login, signup)
+const AUTH_PATHS = ["/login", "/signup"];
+
+export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  // Retirer le préfixe de locale pour la vérification
+  const pathnameWithoutLocale = pathname.replace(/^\/(fr|en)/, "") || "/";
+
+  // Appliquer l'internationalisation
+  const intlResponse = intlMiddleware(request);
+
+  // Vérifier les routes protégées
+  const isProtected = PROTECTED_PATHS.some((p) =>
+    pathnameWithoutLocale.startsWith(p)
+  );
+  const isAuthPath = AUTH_PATHS.some((p) =>
+    pathnameWithoutLocale.startsWith(p)
   );
 
-  const { data: { user } } = await supabase.auth.getUser();
-
-  // Rediriger vers login si route protégée et non authentifié
-  if (isProtected && !user) {
-    const locale = request.nextUrl.pathname.split("/")[1] || "fr";
-    const loginUrl = new URL(`/${locale}/login`, request.url);
-    loginUrl.searchParams.set("redirect", request.nextUrl.pathname);
-    return NextResponse.redirect(loginUrl);
+  if (isProtected || isAuthPath) {
+    return updateSession(request, isProtected, isAuthPath);
   }
 
-  // Rediriger vers dashboard si déjà connecté et sur page auth
-  if (isAuthPath && user) {
-    const locale = request.nextUrl.pathname.split("/")[1] || "fr";
-    return NextResponse.redirect(new URL(`/${locale}/dashboard`, request.url));
-  }
-
-  return supabaseResponse;
+  return intlResponse;
 }
+
+export const config = {
+  matcher: [
+    // Exclure les fichiers statiques et API
+    "/((?!_next/static|_next/image|favicon.ico|api|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js)).*)",
+  ],
+};
