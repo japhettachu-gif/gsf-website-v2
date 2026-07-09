@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import { getLocale } from 'next-intl/server'
 import { getPublicPrograms } from '@/lib/programs'
 import { ProgramCard } from '@/components/programs/ProgramCard'

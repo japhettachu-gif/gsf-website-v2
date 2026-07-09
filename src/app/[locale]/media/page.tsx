@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import { getLocale } from 'next-intl/server'
 import Link from 'next/link'
 import { getPublicVideos, getFeaturedImages } from '@/lib/media'

@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import Link from 'next/link'
 import { getAllApplications, getApplicationStats } from '@/lib/applications'
 import { APPLICATION_STATUS_LABELS, APPLICATION_TYPE_LABELS, POSITION_LABELS } from '@/types/applications'

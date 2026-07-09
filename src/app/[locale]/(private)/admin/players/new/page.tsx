@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import { getTranslations } from "next-intl/server";
 import { PlayerForm } from "@/components/admin/PlayerForm";
 import Link from "next/link";

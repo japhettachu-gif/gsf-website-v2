@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import { getLocale } from 'next-intl/server'
 import { getPublicEvents } from '@/lib/events'
 import { EventCard } from '@/components/events/EventCard'

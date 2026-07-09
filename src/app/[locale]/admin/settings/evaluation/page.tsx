@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import Link from 'next/link'
 import { ChevronLeft, Plus } from 'lucide-react'
 import { getAllCriteria } from '@/lib/evaluations'

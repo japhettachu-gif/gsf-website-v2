@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import { notFound } from 'next/navigation'
 import { getLocale } from 'next-intl/server'
 import { getCompetitionBySlug, getPublicMatchesByCompetition } from '@/lib/competitions'

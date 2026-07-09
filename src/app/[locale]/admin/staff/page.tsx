@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import Link from 'next/link'
 import { getAllStaff } from '@/lib/staff'
 import { STAFF_ROLE_LABELS, STAFF_STATUS_LABELS } from '@/types/staff'

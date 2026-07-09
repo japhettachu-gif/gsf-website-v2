@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import Link from 'next/link'
 import { getAllSessions } from '@/lib/programs'
 import { SESSION_TYPE_LABELS, SESSION_STATUS_LABELS, DAY_LABELS, SESSION_TYPE_COLORS } from '@/types/programs'

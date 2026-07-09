@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import Link from 'next/link'
 import { Plus, Package, AlertTriangle, TrendingDown } from 'lucide-react'
 import { getAllItems, getInventoryStats } from '@/lib/inventory'

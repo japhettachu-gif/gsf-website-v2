@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import { getLocale } from 'next-intl/server'
 import { ApplicationForm } from '@/components/applications/ApplicationForm'
 

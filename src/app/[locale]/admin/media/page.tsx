@@ -1,4 +1,6 @@
 'use client'
+
+export const runtime = 'edge';
 import { useState, useRef } from 'react'
 import { Plus, Trash2, Eye, EyeOff, Star, Upload, Loader2 } from 'lucide-react'
 import { uploadImage, createImage, updateImage, deleteImage } from '@/lib/media'

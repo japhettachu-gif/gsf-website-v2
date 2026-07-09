@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import Link from 'next/link'
 import { ChevronLeft } from 'lucide-react'
 import { ItemForm } from '@/components/inventory/ItemForm'

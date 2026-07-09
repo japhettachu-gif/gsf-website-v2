@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import Link from 'next/link'
 import { getAllEvents } from '@/lib/events'
 import { EVENT_TYPE_LABELS, EVENT_STATUS_LABELS, EVENT_STATUS_COLORS } from '@/types/events'

@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import Link from 'next/link'
 import { getAllMatches } from '@/lib/competitions'
 import { MATCH_STATUS_LABELS, RESULT_COLORS } from '@/types/competitions'

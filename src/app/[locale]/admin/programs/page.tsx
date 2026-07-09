@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import Link from 'next/link'
 import { getAllPrograms } from '@/lib/programs'
 import { PROGRAM_LEVEL_LABELS, PROGRAM_STATUS_LABELS, AGE_GROUP_LABELS } from '@/types/programs'

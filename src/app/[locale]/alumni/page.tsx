@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import { getLocale } from 'next-intl/server'
 import { getPublicAlumni } from '@/lib/partners'
 import { MapPin, Trophy } from 'lucide-react'

@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import { getLocale } from 'next-intl/server'
 import { getPublicGallery, getGalleryAlbums } from '@/lib/media'
 import { GalleryGrid } from '@/components/media/GalleryGrid'

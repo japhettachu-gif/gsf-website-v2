@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import { getTranslations, getLocale } from 'next-intl/server'
 import { getPublicStaff } from '@/lib/staff'
 import { StaffGrid } from '@/components/staff/StaffGrid'

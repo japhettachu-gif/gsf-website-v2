@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import Link from 'next/link'
 import { getAllCompetitions } from '@/lib/competitions'
 import { COMPETITION_TYPE_LABELS, COMPETITION_STATUS_LABELS } from '@/types/competitions'

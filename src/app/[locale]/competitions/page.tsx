@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import { getLocale } from 'next-intl/server'
 import { getPublicCompetitions, getRecentResults, getUpcomingMatches } from '@/lib/competitions'
 import { CompetitionCard } from '@/components/competitions/CompetitionCard'

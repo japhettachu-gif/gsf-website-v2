@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import { SignupForm } from "@/components/auth/SignupForm";
 import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";

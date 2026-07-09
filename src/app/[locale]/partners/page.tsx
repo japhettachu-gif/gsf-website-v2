@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import { getLocale } from 'next-intl/server'
 import { getPublicPartners } from '@/lib/partners'
 import { TIER_CONFIG } from '@/types/partners'

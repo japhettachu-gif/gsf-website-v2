@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import { getLocale } from 'next-intl/server'
 import { getPublicSchedule } from '@/lib/programs'
 import { WeeklySchedule } from '@/components/sessions/WeeklySchedule'
